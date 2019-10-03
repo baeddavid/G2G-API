@@ -9,6 +9,7 @@ type Bathroom {
     purchaseRequired: Boolean! @default(value: false)
     genderNeutral: Boolean! @default(value: false)
     accessibleStall: Boolean! @default(value: false)
+    singleOccupancy: Boolean! @default(value: false)
     createdBy: User @relation(name: "Creator")
     bookmarkedBy: [User!]! @relation(name: "Saver")
     reviews: [Review!]!

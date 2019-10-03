@@ -199,7 +199,9 @@ export type BathroomOrderByInput =
   | "genderNeutral_ASC"
   | "genderNeutral_DESC"
   | "accessibleStall_ASC"
-  | "accessibleStall_DESC";
+  | "accessibleStall_DESC"
+  | "singleOccupancy_ASC"
+  | "singleOccupancy_DESC";
 
 export type ReviewOrderByInput =
   | "id_ASC"
@@ -312,6 +314,8 @@ export interface BathroomWhereInput {
   genderNeutral_not?: Maybe<Boolean>;
   accessibleStall?: Maybe<Boolean>;
   accessibleStall_not?: Maybe<Boolean>;
+  singleOccupancy?: Maybe<Boolean>;
+  singleOccupancy_not?: Maybe<Boolean>;
   createdBy?: Maybe<UserWhereInput>;
   bookmarkedBy_every?: Maybe<UserWhereInput>;
   bookmarkedBy_some?: Maybe<UserWhereInput>;
@@ -463,6 +467,7 @@ export interface BathroomCreateInput {
   purchaseRequired?: Maybe<Boolean>;
   genderNeutral?: Maybe<Boolean>;
   accessibleStall?: Maybe<Boolean>;
+  singleOccupancy?: Maybe<Boolean>;
   createdBy?: Maybe<UserCreateOneWithoutBathroomsInput>;
   bookmarkedBy?: Maybe<UserCreateManyWithoutBookmarkInput>;
   reviews?: Maybe<ReviewCreateManyWithoutBathroomParentInput>;
@@ -511,6 +516,7 @@ export interface BathroomCreateWithoutReviewsInput {
   purchaseRequired?: Maybe<Boolean>;
   genderNeutral?: Maybe<Boolean>;
   accessibleStall?: Maybe<Boolean>;
+  singleOccupancy?: Maybe<Boolean>;
   createdBy?: Maybe<UserCreateOneWithoutBathroomsInput>;
   bookmarkedBy?: Maybe<UserCreateManyWithoutBookmarkInput>;
 }
@@ -548,6 +554,7 @@ export interface BathroomCreateWithoutCreatedByInput {
   purchaseRequired?: Maybe<Boolean>;
   genderNeutral?: Maybe<Boolean>;
   accessibleStall?: Maybe<Boolean>;
+  singleOccupancy?: Maybe<Boolean>;
   bookmarkedBy?: Maybe<UserCreateManyWithoutBookmarkInput>;
   reviews?: Maybe<ReviewCreateManyWithoutBathroomParentInput>;
 }
@@ -599,6 +606,7 @@ export interface BathroomCreateWithoutBookmarkedByInput {
   purchaseRequired?: Maybe<Boolean>;
   genderNeutral?: Maybe<Boolean>;
   accessibleStall?: Maybe<Boolean>;
+  singleOccupancy?: Maybe<Boolean>;
   createdBy?: Maybe<UserCreateOneWithoutBathroomsInput>;
   reviews?: Maybe<ReviewCreateManyWithoutBathroomParentInput>;
 }
@@ -612,6 +620,7 @@ export interface BathroomUpdateInput {
   purchaseRequired?: Maybe<Boolean>;
   genderNeutral?: Maybe<Boolean>;
   accessibleStall?: Maybe<Boolean>;
+  singleOccupancy?: Maybe<Boolean>;
   createdBy?: Maybe<UserUpdateOneWithoutBathroomsInput>;
   bookmarkedBy?: Maybe<UserUpdateManyWithoutBookmarkInput>;
   reviews?: Maybe<ReviewUpdateManyWithoutBathroomParentInput>;
@@ -686,6 +695,7 @@ export interface BathroomUpdateWithoutReviewsDataInput {
   purchaseRequired?: Maybe<Boolean>;
   genderNeutral?: Maybe<Boolean>;
   accessibleStall?: Maybe<Boolean>;
+  singleOccupancy?: Maybe<Boolean>;
   createdBy?: Maybe<UserUpdateOneWithoutBathroomsInput>;
   bookmarkedBy?: Maybe<UserUpdateManyWithoutBookmarkInput>;
 }
@@ -762,6 +772,7 @@ export interface BathroomUpdateWithoutCreatedByDataInput {
   purchaseRequired?: Maybe<Boolean>;
   genderNeutral?: Maybe<Boolean>;
   accessibleStall?: Maybe<Boolean>;
+  singleOccupancy?: Maybe<Boolean>;
   bookmarkedBy?: Maybe<UserUpdateManyWithoutBookmarkInput>;
   reviews?: Maybe<ReviewUpdateManyWithoutBathroomParentInput>;
 }
@@ -856,6 +867,7 @@ export interface BathroomUpdateWithoutBookmarkedByDataInput {
   purchaseRequired?: Maybe<Boolean>;
   genderNeutral?: Maybe<Boolean>;
   accessibleStall?: Maybe<Boolean>;
+  singleOccupancy?: Maybe<Boolean>;
   createdBy?: Maybe<UserUpdateOneWithoutBathroomsInput>;
   reviews?: Maybe<ReviewUpdateManyWithoutBathroomParentInput>;
 }
@@ -953,6 +965,8 @@ export interface BathroomScalarWhereInput {
   genderNeutral_not?: Maybe<Boolean>;
   accessibleStall?: Maybe<Boolean>;
   accessibleStall_not?: Maybe<Boolean>;
+  singleOccupancy?: Maybe<Boolean>;
+  singleOccupancy_not?: Maybe<Boolean>;
   AND?: Maybe<BathroomScalarWhereInput[] | BathroomScalarWhereInput>;
   OR?: Maybe<BathroomScalarWhereInput[] | BathroomScalarWhereInput>;
   NOT?: Maybe<BathroomScalarWhereInput[] | BathroomScalarWhereInput>;
@@ -972,6 +986,7 @@ export interface BathroomUpdateManyDataInput {
   purchaseRequired?: Maybe<Boolean>;
   genderNeutral?: Maybe<Boolean>;
   accessibleStall?: Maybe<Boolean>;
+  singleOccupancy?: Maybe<Boolean>;
 }
 
 export interface UserUpsertWithoutReviewsInput {
@@ -1153,6 +1168,7 @@ export interface BathroomUpdateManyMutationInput {
   purchaseRequired?: Maybe<Boolean>;
   genderNeutral?: Maybe<Boolean>;
   accessibleStall?: Maybe<Boolean>;
+  singleOccupancy?: Maybe<Boolean>;
 }
 
 export interface ReviewCreateInput {
@@ -1252,6 +1268,7 @@ export interface Bathroom {
   purchaseRequired: Boolean;
   genderNeutral: Boolean;
   accessibleStall: Boolean;
+  singleOccupancy: Boolean;
 }
 
 export interface BathroomPromise extends Promise<Bathroom>, Fragmentable {
@@ -1265,6 +1282,7 @@ export interface BathroomPromise extends Promise<Bathroom>, Fragmentable {
   purchaseRequired: () => Promise<Boolean>;
   genderNeutral: () => Promise<Boolean>;
   accessibleStall: () => Promise<Boolean>;
+  singleOccupancy: () => Promise<Boolean>;
   createdBy: <T = UserPromise>() => T;
   bookmarkedBy: <T = FragmentableArray<User>>(args?: {
     where?: UserWhereInput;
@@ -1299,6 +1317,7 @@ export interface BathroomSubscription
   purchaseRequired: () => Promise<AsyncIterator<Boolean>>;
   genderNeutral: () => Promise<AsyncIterator<Boolean>>;
   accessibleStall: () => Promise<AsyncIterator<Boolean>>;
+  singleOccupancy: () => Promise<AsyncIterator<Boolean>>;
   createdBy: <T = UserSubscription>() => T;
   bookmarkedBy: <T = Promise<AsyncIterator<UserSubscription>>>(args?: {
     where?: UserWhereInput;
@@ -1333,6 +1352,7 @@ export interface BathroomNullablePromise
   purchaseRequired: () => Promise<Boolean>;
   genderNeutral: () => Promise<Boolean>;
   accessibleStall: () => Promise<Boolean>;
+  singleOccupancy: () => Promise<Boolean>;
   createdBy: <T = UserPromise>() => T;
   bookmarkedBy: <T = FragmentableArray<User>>(args?: {
     where?: UserWhereInput;
@@ -1740,6 +1760,7 @@ export interface BathroomPreviousValues {
   purchaseRequired: Boolean;
   genderNeutral: Boolean;
   accessibleStall: Boolean;
+  singleOccupancy: Boolean;
 }
 
 export interface BathroomPreviousValuesPromise
@@ -1755,6 +1776,7 @@ export interface BathroomPreviousValuesPromise
   purchaseRequired: () => Promise<Boolean>;
   genderNeutral: () => Promise<Boolean>;
   accessibleStall: () => Promise<Boolean>;
+  singleOccupancy: () => Promise<Boolean>;
 }
 
 export interface BathroomPreviousValuesSubscription
@@ -1770,6 +1792,7 @@ export interface BathroomPreviousValuesSubscription
   purchaseRequired: () => Promise<AsyncIterator<Boolean>>;
   genderNeutral: () => Promise<AsyncIterator<Boolean>>;
   accessibleStall: () => Promise<AsyncIterator<Boolean>>;
+  singleOccupancy: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface ReviewSubscriptionPayload {

@@ -1,0 +1,74 @@
+type Query {
+    feed(filter: String, skip: Int, first: Int): Feed!
+}
+
+type Mutation {
+    postBathroom(
+        businessName: String,
+        description: String!,
+        address: String!,
+        lat: Float!,
+        lng: Float!,
+        purchaseRequired: Boolean!,
+        genderNeutral: Boolean!,
+        accessibleStall: Boolean!,
+        singleOccupancy: Boolean!,
+    ): Bathroom!
+
+    postReview(
+        title: String!,
+        description: String!,
+    ): Review!
+
+    updateBathroom(
+        id: ID!,
+        businessName: String,
+        description: String!,
+        address: String!,
+        lat: Float!,
+        lng: Float!,
+        purchaseRequired: Boolean!,
+        genderNeutral: Boolean!,
+        accessibleStall: Boolean!,
+        singleOccupancy: Boolean!, 
+    ): Bathroom!
+}
+
+type Bathroom {
+    id: ID!
+    businessName: String
+    description: String!
+    address: String!
+    lat: Float!
+    lng: Float!
+    purchaseRequired: Boolean!
+    genderNeutral: Boolean!
+    accessibleStall: Boolean!
+    singleOccupancy: Boolean!
+    createdBy: User
+    bookmarkedBy: [User!]!
+    reviews: [Review!]!
+}
+
+type Review {
+    id: ID!
+    title: String!
+    description: String!
+    createdBy: User
+    bathroomParent: Bathroom
+}
+
+type User {
+    id: ID!
+    name: String!
+    email: String!
+    password: String!
+    bathrooms: [Bathroom!]!
+    reviews: [Review!]!
+    bookmark: [Bathroom!]!
+}
+
+type Feed {
+    bathrooms: [Bathroom!]!
+    count: Int!
+}

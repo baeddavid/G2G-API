@@ -30,6 +30,7 @@ type Bathroom {
   purchaseRequired: Boolean!
   genderNeutral: Boolean!
   accessibleStall: Boolean!
+  singleOccupancy: Boolean!
   createdBy: User
   bookmarkedBy(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   reviews(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Review!]
@@ -51,6 +52,7 @@ input BathroomCreateInput {
   purchaseRequired: Boolean
   genderNeutral: Boolean
   accessibleStall: Boolean
+  singleOccupancy: Boolean
   createdBy: UserCreateOneWithoutBathroomsInput
   bookmarkedBy: UserCreateManyWithoutBookmarkInput
   reviews: ReviewCreateManyWithoutBathroomParentInput
@@ -81,6 +83,7 @@ input BathroomCreateWithoutBookmarkedByInput {
   purchaseRequired: Boolean
   genderNeutral: Boolean
   accessibleStall: Boolean
+  singleOccupancy: Boolean
   createdBy: UserCreateOneWithoutBathroomsInput
   reviews: ReviewCreateManyWithoutBathroomParentInput
 }
@@ -95,6 +98,7 @@ input BathroomCreateWithoutCreatedByInput {
   purchaseRequired: Boolean
   genderNeutral: Boolean
   accessibleStall: Boolean
+  singleOccupancy: Boolean
   bookmarkedBy: UserCreateManyWithoutBookmarkInput
   reviews: ReviewCreateManyWithoutBathroomParentInput
 }
@@ -109,6 +113,7 @@ input BathroomCreateWithoutReviewsInput {
   purchaseRequired: Boolean
   genderNeutral: Boolean
   accessibleStall: Boolean
+  singleOccupancy: Boolean
   createdBy: UserCreateOneWithoutBathroomsInput
   bookmarkedBy: UserCreateManyWithoutBookmarkInput
 }
@@ -139,6 +144,8 @@ enum BathroomOrderByInput {
   genderNeutral_DESC
   accessibleStall_ASC
   accessibleStall_DESC
+  singleOccupancy_ASC
+  singleOccupancy_DESC
 }
 
 type BathroomPreviousValues {
@@ -152,6 +159,7 @@ type BathroomPreviousValues {
   purchaseRequired: Boolean!
   genderNeutral: Boolean!
   accessibleStall: Boolean!
+  singleOccupancy: Boolean!
 }
 
 input BathroomScalarWhereInput {
@@ -241,6 +249,8 @@ input BathroomScalarWhereInput {
   genderNeutral_not: Boolean
   accessibleStall: Boolean
   accessibleStall_not: Boolean
+  singleOccupancy: Boolean
+  singleOccupancy_not: Boolean
   AND: [BathroomScalarWhereInput!]
   OR: [BathroomScalarWhereInput!]
   NOT: [BathroomScalarWhereInput!]
@@ -273,6 +283,7 @@ input BathroomUpdateInput {
   purchaseRequired: Boolean
   genderNeutral: Boolean
   accessibleStall: Boolean
+  singleOccupancy: Boolean
   createdBy: UserUpdateOneWithoutBathroomsInput
   bookmarkedBy: UserUpdateManyWithoutBookmarkInput
   reviews: ReviewUpdateManyWithoutBathroomParentInput
@@ -287,6 +298,7 @@ input BathroomUpdateManyDataInput {
   purchaseRequired: Boolean
   genderNeutral: Boolean
   accessibleStall: Boolean
+  singleOccupancy: Boolean
 }
 
 input BathroomUpdateManyMutationInput {
@@ -298,6 +310,7 @@ input BathroomUpdateManyMutationInput {
   purchaseRequired: Boolean
   genderNeutral: Boolean
   accessibleStall: Boolean
+  singleOccupancy: Boolean
 }
 
 input BathroomUpdateManyWithoutBookmarkedByInput {
@@ -347,6 +360,7 @@ input BathroomUpdateWithoutBookmarkedByDataInput {
   purchaseRequired: Boolean
   genderNeutral: Boolean
   accessibleStall: Boolean
+  singleOccupancy: Boolean
   createdBy: UserUpdateOneWithoutBathroomsInput
   reviews: ReviewUpdateManyWithoutBathroomParentInput
 }
@@ -360,6 +374,7 @@ input BathroomUpdateWithoutCreatedByDataInput {
   purchaseRequired: Boolean
   genderNeutral: Boolean
   accessibleStall: Boolean
+  singleOccupancy: Boolean
   bookmarkedBy: UserUpdateManyWithoutBookmarkInput
   reviews: ReviewUpdateManyWithoutBathroomParentInput
 }
@@ -373,6 +388,7 @@ input BathroomUpdateWithoutReviewsDataInput {
   purchaseRequired: Boolean
   genderNeutral: Boolean
   accessibleStall: Boolean
+  singleOccupancy: Boolean
   createdBy: UserUpdateOneWithoutBathroomsInput
   bookmarkedBy: UserUpdateManyWithoutBookmarkInput
 }
@@ -491,6 +507,8 @@ input BathroomWhereInput {
   genderNeutral_not: Boolean
   accessibleStall: Boolean
   accessibleStall_not: Boolean
+  singleOccupancy: Boolean
+  singleOccupancy_not: Boolean
   createdBy: UserWhereInput
   bookmarkedBy_every: UserWhereInput
   bookmarkedBy_some: UserWhereInput
