@@ -32,6 +32,20 @@ type Mutation {
         accessibleStall: Boolean!,
         singleOccupancy: Boolean!, 
     ): Bathroom!
+
+    updateReview(
+        id: ID!,
+        title: String!,
+        description: String!,
+    ): Review!
+
+    deleteBathroom(
+        id: ID!
+    ): Bathroom!
+
+    deleteReview(
+        id: ID!
+    ): Review!
 }
 
 type Bathroom {

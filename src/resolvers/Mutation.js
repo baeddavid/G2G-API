@@ -34,11 +34,32 @@ async function updateBathroom(parent, args, context, info) {
             accessibleStall: args.accessibleStall,
             singleOccupancy: args.singleOccupancy
         }
-    })
+    });
+}
+
+async function updateReview(parent, args, context, info) {
+    return context.prisma.updateReview({
+        where: { id: `${args.id}`},
+        data: {
+            title: args.title,
+            description: args.description,
+        }
+    });
+}
+
+async function deleteBathroom(parent, args, context, info) {
+    return context.prisma.deleteBathroom({ id: `${args.id}` });
+}
+
+async function deleteReview(parent, args, context, info) {
+    return context.prisma.deleteReview({ id: `${args.id}` });
 }
 
 module.exports = {
     postBathroom,
     postReview,
     updateBathroom,
+    updateReview,
+    deleteBathroom,
+    deleteReview,
 };
