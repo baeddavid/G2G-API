@@ -1,0 +1,37 @@
+type Bathroom {
+    id: ID! @id
+    createdAt: DateTime! @createdAt
+    businessName: String
+    description: String!
+    address: String!
+    lat: Float!
+    lng: Float!
+    purchaseRequired: Boolean! @default(value: "false") 
+    genderNeutral: Boolean! @default(value: "false")
+    accessibleStall: Boolean! @default(value: "false")
+    // Relational Links
+    createdBy: User
+    bookmarkedBy: [User!]!
+    reviews: [Review!]!
+}
+
+type Review {
+    id: ID! @id
+    title: String!
+    description: String!
+    // Relational Links
+    createdBy: User
+    bathroomParent: Bathroom
+}
+
+type User {
+    // May need to change user ID
+    id: ID! @id
+    name: String!
+    email: String!
+    password: String!
+    // Relational Links
+    bathrooms: [Bathroom!]!
+    reviews: [Review!]!
+    bookmark: [Bathroom!]!
+}

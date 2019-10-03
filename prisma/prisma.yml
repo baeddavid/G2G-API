@@ -1,0 +1,8 @@
+endpoint: https://g2g-f94952826c.herokuapp.com/g2g-api/start
+
+
+datamodel: datamodel.prisma
+
+generate:
+  - generator: javascript-client
+    output: ../src/generated/prisma-client
