@@ -3,7 +3,15 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregateLink {
+/* GraphQL */ `type AggregateBathroom {
+  count: Int!
+}
+
+type AggregateReview {
+  count: Int!
+}
+
+type AggregateUser {
   count: Int!
 }
 
@@ -11,79 +19,142 @@ type BatchPayload {
   count: Long!
 }
 
-scalar DateTime
-
-type Link {
+type Bathroom {
   id: ID!
   createdAt: DateTime!
+  businessName: String
   description: String!
-  url: String!
+  address: String!
+  lat: Float!
+  lng: Float!
+  purchaseRequired: Boolean!
+  genderNeutral: Boolean!
+  accessibleStall: Boolean!
+  createdBy: User
+  bookmarkedBy(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  reviews(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Review!]
 }
 
-type LinkConnection {
+type BathroomConnection {
   pageInfo: PageInfo!
-  edges: [LinkEdge]!
-  aggregate: AggregateLink!
+  edges: [BathroomEdge]!
+  aggregate: AggregateBathroom!
 }
 
-input LinkCreateInput {
+input BathroomCreateInput {
   id: ID
+  businessName: String
   description: String!
-  url: String!
+  address: String!
+  lat: Float!
+  lng: Float!
+  purchaseRequired: Boolean
+  genderNeutral: Boolean
+  accessibleStall: Boolean
+  createdBy: UserCreateOneWithoutBathroomsInput
+  bookmarkedBy: UserCreateManyWithoutBookmarkInput
+  reviews: ReviewCreateManyWithoutBathroomParentInput
 }
 
-type LinkEdge {
-  node: Link!
+input BathroomCreateManyWithoutBookmarkedByInput {
+  create: [BathroomCreateWithoutBookmarkedByInput!]
+  connect: [BathroomWhereUniqueInput!]
+}
+
+input BathroomCreateManyWithoutCreatedByInput {
+  create: [BathroomCreateWithoutCreatedByInput!]
+  connect: [BathroomWhereUniqueInput!]
+}
+
+input BathroomCreateOneWithoutReviewsInput {
+  create: BathroomCreateWithoutReviewsInput
+  connect: BathroomWhereUniqueInput
+}
+
+input BathroomCreateWithoutBookmarkedByInput {
+  id: ID
+  businessName: String
+  description: String!
+  address: String!
+  lat: Float!
+  lng: Float!
+  purchaseRequired: Boolean
+  genderNeutral: Boolean
+  accessibleStall: Boolean
+  createdBy: UserCreateOneWithoutBathroomsInput
+  reviews: ReviewCreateManyWithoutBathroomParentInput
+}
+
+input BathroomCreateWithoutCreatedByInput {
+  id: ID
+  businessName: String
+  description: String!
+  address: String!
+  lat: Float!
+  lng: Float!
+  purchaseRequired: Boolean
+  genderNeutral: Boolean
+  accessibleStall: Boolean
+  bookmarkedBy: UserCreateManyWithoutBookmarkInput
+  reviews: ReviewCreateManyWithoutBathroomParentInput
+}
+
+input BathroomCreateWithoutReviewsInput {
+  id: ID
+  businessName: String
+  description: String!
+  address: String!
+  lat: Float!
+  lng: Float!
+  purchaseRequired: Boolean
+  genderNeutral: Boolean
+  accessibleStall: Boolean
+  createdBy: UserCreateOneWithoutBathroomsInput
+  bookmarkedBy: UserCreateManyWithoutBookmarkInput
+}
+
+type BathroomEdge {
+  node: Bathroom!
   cursor: String!
 }
 
-enum LinkOrderByInput {
+enum BathroomOrderByInput {
   id_ASC
   id_DESC
   createdAt_ASC
   createdAt_DESC
+  businessName_ASC
+  businessName_DESC
   description_ASC
   description_DESC
-  url_ASC
-  url_DESC
+  address_ASC
+  address_DESC
+  lat_ASC
+  lat_DESC
+  lng_ASC
+  lng_DESC
+  purchaseRequired_ASC
+  purchaseRequired_DESC
+  genderNeutral_ASC
+  genderNeutral_DESC
+  accessibleStall_ASC
+  accessibleStall_DESC
 }
 
-type LinkPreviousValues {
+type BathroomPreviousValues {
   id: ID!
   createdAt: DateTime!
+  businessName: String
   description: String!
-  url: String!
+  address: String!
+  lat: Float!
+  lng: Float!
+  purchaseRequired: Boolean!
+  genderNeutral: Boolean!
+  accessibleStall: Boolean!
 }
 
-type LinkSubscriptionPayload {
-  mutation: MutationType!
-  node: Link
-  updatedFields: [String!]
-  previousValues: LinkPreviousValues
-}
-
-input LinkSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: LinkWhereInput
-  AND: [LinkSubscriptionWhereInput!]
-  OR: [LinkSubscriptionWhereInput!]
-  NOT: [LinkSubscriptionWhereInput!]
-}
-
-input LinkUpdateInput {
-  description: String
-  url: String
-}
-
-input LinkUpdateManyMutationInput {
-  description: String
-  url: String
-}
-
-input LinkWhereInput {
+input BathroomScalarWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -106,6 +177,20 @@ input LinkWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
+  businessName: String
+  businessName_not: String
+  businessName_in: [String!]
+  businessName_not_in: [String!]
+  businessName_lt: String
+  businessName_lte: String
+  businessName_gt: String
+  businessName_gte: String
+  businessName_contains: String
+  businessName_not_contains: String
+  businessName_starts_with: String
+  businessName_not_starts_with: String
+  businessName_ends_with: String
+  businessName_not_ends_with: String
   description: String
   description_not: String
   description_in: [String!]
@@ -120,38 +205,331 @@ input LinkWhereInput {
   description_not_starts_with: String
   description_ends_with: String
   description_not_ends_with: String
-  url: String
-  url_not: String
-  url_in: [String!]
-  url_not_in: [String!]
-  url_lt: String
-  url_lte: String
-  url_gt: String
-  url_gte: String
-  url_contains: String
-  url_not_contains: String
-  url_starts_with: String
-  url_not_starts_with: String
-  url_ends_with: String
-  url_not_ends_with: String
-  AND: [LinkWhereInput!]
-  OR: [LinkWhereInput!]
-  NOT: [LinkWhereInput!]
+  address: String
+  address_not: String
+  address_in: [String!]
+  address_not_in: [String!]
+  address_lt: String
+  address_lte: String
+  address_gt: String
+  address_gte: String
+  address_contains: String
+  address_not_contains: String
+  address_starts_with: String
+  address_not_starts_with: String
+  address_ends_with: String
+  address_not_ends_with: String
+  lat: Float
+  lat_not: Float
+  lat_in: [Float!]
+  lat_not_in: [Float!]
+  lat_lt: Float
+  lat_lte: Float
+  lat_gt: Float
+  lat_gte: Float
+  lng: Float
+  lng_not: Float
+  lng_in: [Float!]
+  lng_not_in: [Float!]
+  lng_lt: Float
+  lng_lte: Float
+  lng_gt: Float
+  lng_gte: Float
+  purchaseRequired: Boolean
+  purchaseRequired_not: Boolean
+  genderNeutral: Boolean
+  genderNeutral_not: Boolean
+  accessibleStall: Boolean
+  accessibleStall_not: Boolean
+  AND: [BathroomScalarWhereInput!]
+  OR: [BathroomScalarWhereInput!]
+  NOT: [BathroomScalarWhereInput!]
 }
 
-input LinkWhereUniqueInput {
+type BathroomSubscriptionPayload {
+  mutation: MutationType!
+  node: Bathroom
+  updatedFields: [String!]
+  previousValues: BathroomPreviousValues
+}
+
+input BathroomSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: BathroomWhereInput
+  AND: [BathroomSubscriptionWhereInput!]
+  OR: [BathroomSubscriptionWhereInput!]
+  NOT: [BathroomSubscriptionWhereInput!]
+}
+
+input BathroomUpdateInput {
+  businessName: String
+  description: String
+  address: String
+  lat: Float
+  lng: Float
+  purchaseRequired: Boolean
+  genderNeutral: Boolean
+  accessibleStall: Boolean
+  createdBy: UserUpdateOneWithoutBathroomsInput
+  bookmarkedBy: UserUpdateManyWithoutBookmarkInput
+  reviews: ReviewUpdateManyWithoutBathroomParentInput
+}
+
+input BathroomUpdateManyDataInput {
+  businessName: String
+  description: String
+  address: String
+  lat: Float
+  lng: Float
+  purchaseRequired: Boolean
+  genderNeutral: Boolean
+  accessibleStall: Boolean
+}
+
+input BathroomUpdateManyMutationInput {
+  businessName: String
+  description: String
+  address: String
+  lat: Float
+  lng: Float
+  purchaseRequired: Boolean
+  genderNeutral: Boolean
+  accessibleStall: Boolean
+}
+
+input BathroomUpdateManyWithoutBookmarkedByInput {
+  create: [BathroomCreateWithoutBookmarkedByInput!]
+  delete: [BathroomWhereUniqueInput!]
+  connect: [BathroomWhereUniqueInput!]
+  set: [BathroomWhereUniqueInput!]
+  disconnect: [BathroomWhereUniqueInput!]
+  update: [BathroomUpdateWithWhereUniqueWithoutBookmarkedByInput!]
+  upsert: [BathroomUpsertWithWhereUniqueWithoutBookmarkedByInput!]
+  deleteMany: [BathroomScalarWhereInput!]
+  updateMany: [BathroomUpdateManyWithWhereNestedInput!]
+}
+
+input BathroomUpdateManyWithoutCreatedByInput {
+  create: [BathroomCreateWithoutCreatedByInput!]
+  delete: [BathroomWhereUniqueInput!]
+  connect: [BathroomWhereUniqueInput!]
+  set: [BathroomWhereUniqueInput!]
+  disconnect: [BathroomWhereUniqueInput!]
+  update: [BathroomUpdateWithWhereUniqueWithoutCreatedByInput!]
+  upsert: [BathroomUpsertWithWhereUniqueWithoutCreatedByInput!]
+  deleteMany: [BathroomScalarWhereInput!]
+  updateMany: [BathroomUpdateManyWithWhereNestedInput!]
+}
+
+input BathroomUpdateManyWithWhereNestedInput {
+  where: BathroomScalarWhereInput!
+  data: BathroomUpdateManyDataInput!
+}
+
+input BathroomUpdateOneWithoutReviewsInput {
+  create: BathroomCreateWithoutReviewsInput
+  update: BathroomUpdateWithoutReviewsDataInput
+  upsert: BathroomUpsertWithoutReviewsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: BathroomWhereUniqueInput
+}
+
+input BathroomUpdateWithoutBookmarkedByDataInput {
+  businessName: String
+  description: String
+  address: String
+  lat: Float
+  lng: Float
+  purchaseRequired: Boolean
+  genderNeutral: Boolean
+  accessibleStall: Boolean
+  createdBy: UserUpdateOneWithoutBathroomsInput
+  reviews: ReviewUpdateManyWithoutBathroomParentInput
+}
+
+input BathroomUpdateWithoutCreatedByDataInput {
+  businessName: String
+  description: String
+  address: String
+  lat: Float
+  lng: Float
+  purchaseRequired: Boolean
+  genderNeutral: Boolean
+  accessibleStall: Boolean
+  bookmarkedBy: UserUpdateManyWithoutBookmarkInput
+  reviews: ReviewUpdateManyWithoutBathroomParentInput
+}
+
+input BathroomUpdateWithoutReviewsDataInput {
+  businessName: String
+  description: String
+  address: String
+  lat: Float
+  lng: Float
+  purchaseRequired: Boolean
+  genderNeutral: Boolean
+  accessibleStall: Boolean
+  createdBy: UserUpdateOneWithoutBathroomsInput
+  bookmarkedBy: UserUpdateManyWithoutBookmarkInput
+}
+
+input BathroomUpdateWithWhereUniqueWithoutBookmarkedByInput {
+  where: BathroomWhereUniqueInput!
+  data: BathroomUpdateWithoutBookmarkedByDataInput!
+}
+
+input BathroomUpdateWithWhereUniqueWithoutCreatedByInput {
+  where: BathroomWhereUniqueInput!
+  data: BathroomUpdateWithoutCreatedByDataInput!
+}
+
+input BathroomUpsertWithoutReviewsInput {
+  update: BathroomUpdateWithoutReviewsDataInput!
+  create: BathroomCreateWithoutReviewsInput!
+}
+
+input BathroomUpsertWithWhereUniqueWithoutBookmarkedByInput {
+  where: BathroomWhereUniqueInput!
+  update: BathroomUpdateWithoutBookmarkedByDataInput!
+  create: BathroomCreateWithoutBookmarkedByInput!
+}
+
+input BathroomUpsertWithWhereUniqueWithoutCreatedByInput {
+  where: BathroomWhereUniqueInput!
+  update: BathroomUpdateWithoutCreatedByDataInput!
+  create: BathroomCreateWithoutCreatedByInput!
+}
+
+input BathroomWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  businessName: String
+  businessName_not: String
+  businessName_in: [String!]
+  businessName_not_in: [String!]
+  businessName_lt: String
+  businessName_lte: String
+  businessName_gt: String
+  businessName_gte: String
+  businessName_contains: String
+  businessName_not_contains: String
+  businessName_starts_with: String
+  businessName_not_starts_with: String
+  businessName_ends_with: String
+  businessName_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  address: String
+  address_not: String
+  address_in: [String!]
+  address_not_in: [String!]
+  address_lt: String
+  address_lte: String
+  address_gt: String
+  address_gte: String
+  address_contains: String
+  address_not_contains: String
+  address_starts_with: String
+  address_not_starts_with: String
+  address_ends_with: String
+  address_not_ends_with: String
+  lat: Float
+  lat_not: Float
+  lat_in: [Float!]
+  lat_not_in: [Float!]
+  lat_lt: Float
+  lat_lte: Float
+  lat_gt: Float
+  lat_gte: Float
+  lng: Float
+  lng_not: Float
+  lng_in: [Float!]
+  lng_not_in: [Float!]
+  lng_lt: Float
+  lng_lte: Float
+  lng_gt: Float
+  lng_gte: Float
+  purchaseRequired: Boolean
+  purchaseRequired_not: Boolean
+  genderNeutral: Boolean
+  genderNeutral_not: Boolean
+  accessibleStall: Boolean
+  accessibleStall_not: Boolean
+  createdBy: UserWhereInput
+  bookmarkedBy_every: UserWhereInput
+  bookmarkedBy_some: UserWhereInput
+  bookmarkedBy_none: UserWhereInput
+  reviews_every: ReviewWhereInput
+  reviews_some: ReviewWhereInput
+  reviews_none: ReviewWhereInput
+  AND: [BathroomWhereInput!]
+  OR: [BathroomWhereInput!]
+  NOT: [BathroomWhereInput!]
+}
+
+input BathroomWhereUniqueInput {
   id: ID
 }
+
+scalar DateTime
 
 scalar Long
 
 type Mutation {
-  createLink(data: LinkCreateInput!): Link!
-  updateLink(data: LinkUpdateInput!, where: LinkWhereUniqueInput!): Link
-  updateManyLinks(data: LinkUpdateManyMutationInput!, where: LinkWhereInput): BatchPayload!
-  upsertLink(where: LinkWhereUniqueInput!, create: LinkCreateInput!, update: LinkUpdateInput!): Link!
-  deleteLink(where: LinkWhereUniqueInput!): Link
-  deleteManyLinks(where: LinkWhereInput): BatchPayload!
+  createBathroom(data: BathroomCreateInput!): Bathroom!
+  updateBathroom(data: BathroomUpdateInput!, where: BathroomWhereUniqueInput!): Bathroom
+  updateManyBathrooms(data: BathroomUpdateManyMutationInput!, where: BathroomWhereInput): BatchPayload!
+  upsertBathroom(where: BathroomWhereUniqueInput!, create: BathroomCreateInput!, update: BathroomUpdateInput!): Bathroom!
+  deleteBathroom(where: BathroomWhereUniqueInput!): Bathroom
+  deleteManyBathrooms(where: BathroomWhereInput): BatchPayload!
+  createReview(data: ReviewCreateInput!): Review!
+  updateReview(data: ReviewUpdateInput!, where: ReviewWhereUniqueInput!): Review
+  updateManyReviews(data: ReviewUpdateManyMutationInput!, where: ReviewWhereInput): BatchPayload!
+  upsertReview(where: ReviewWhereUniqueInput!, create: ReviewCreateInput!, update: ReviewUpdateInput!): Review!
+  deleteReview(where: ReviewWhereUniqueInput!): Review
+  deleteManyReviews(where: ReviewWhereInput): BatchPayload!
+  createUser(data: UserCreateInput!): User!
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  deleteUser(where: UserWhereUniqueInput!): User
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -172,14 +550,635 @@ type PageInfo {
 }
 
 type Query {
-  link(where: LinkWhereUniqueInput!): Link
-  links(where: LinkWhereInput, orderBy: LinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Link]!
-  linksConnection(where: LinkWhereInput, orderBy: LinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LinkConnection!
+  bathroom(where: BathroomWhereUniqueInput!): Bathroom
+  bathrooms(where: BathroomWhereInput, orderBy: BathroomOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Bathroom]!
+  bathroomsConnection(where: BathroomWhereInput, orderBy: BathroomOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BathroomConnection!
+  review(where: ReviewWhereUniqueInput!): Review
+  reviews(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Review]!
+  reviewsConnection(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ReviewConnection!
+  user(where: UserWhereUniqueInput!): User
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   node(id: ID!): Node
 }
 
+type Review {
+  id: ID!
+  title: String!
+  description: String!
+  createdBy: User
+  bathroomParent: Bathroom
+}
+
+type ReviewConnection {
+  pageInfo: PageInfo!
+  edges: [ReviewEdge]!
+  aggregate: AggregateReview!
+}
+
+input ReviewCreateInput {
+  id: ID
+  title: String!
+  description: String!
+  createdBy: UserCreateOneWithoutReviewsInput
+  bathroomParent: BathroomCreateOneWithoutReviewsInput
+}
+
+input ReviewCreateManyWithoutBathroomParentInput {
+  create: [ReviewCreateWithoutBathroomParentInput!]
+  connect: [ReviewWhereUniqueInput!]
+}
+
+input ReviewCreateManyWithoutCreatedByInput {
+  create: [ReviewCreateWithoutCreatedByInput!]
+  connect: [ReviewWhereUniqueInput!]
+}
+
+input ReviewCreateWithoutBathroomParentInput {
+  id: ID
+  title: String!
+  description: String!
+  createdBy: UserCreateOneWithoutReviewsInput
+}
+
+input ReviewCreateWithoutCreatedByInput {
+  id: ID
+  title: String!
+  description: String!
+  bathroomParent: BathroomCreateOneWithoutReviewsInput
+}
+
+type ReviewEdge {
+  node: Review!
+  cursor: String!
+}
+
+enum ReviewOrderByInput {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+  description_ASC
+  description_DESC
+}
+
+type ReviewPreviousValues {
+  id: ID!
+  title: String!
+  description: String!
+}
+
+input ReviewScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  AND: [ReviewScalarWhereInput!]
+  OR: [ReviewScalarWhereInput!]
+  NOT: [ReviewScalarWhereInput!]
+}
+
+type ReviewSubscriptionPayload {
+  mutation: MutationType!
+  node: Review
+  updatedFields: [String!]
+  previousValues: ReviewPreviousValues
+}
+
+input ReviewSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ReviewWhereInput
+  AND: [ReviewSubscriptionWhereInput!]
+  OR: [ReviewSubscriptionWhereInput!]
+  NOT: [ReviewSubscriptionWhereInput!]
+}
+
+input ReviewUpdateInput {
+  title: String
+  description: String
+  createdBy: UserUpdateOneWithoutReviewsInput
+  bathroomParent: BathroomUpdateOneWithoutReviewsInput
+}
+
+input ReviewUpdateManyDataInput {
+  title: String
+  description: String
+}
+
+input ReviewUpdateManyMutationInput {
+  title: String
+  description: String
+}
+
+input ReviewUpdateManyWithoutBathroomParentInput {
+  create: [ReviewCreateWithoutBathroomParentInput!]
+  delete: [ReviewWhereUniqueInput!]
+  connect: [ReviewWhereUniqueInput!]
+  set: [ReviewWhereUniqueInput!]
+  disconnect: [ReviewWhereUniqueInput!]
+  update: [ReviewUpdateWithWhereUniqueWithoutBathroomParentInput!]
+  upsert: [ReviewUpsertWithWhereUniqueWithoutBathroomParentInput!]
+  deleteMany: [ReviewScalarWhereInput!]
+  updateMany: [ReviewUpdateManyWithWhereNestedInput!]
+}
+
+input ReviewUpdateManyWithoutCreatedByInput {
+  create: [ReviewCreateWithoutCreatedByInput!]
+  delete: [ReviewWhereUniqueInput!]
+  connect: [ReviewWhereUniqueInput!]
+  set: [ReviewWhereUniqueInput!]
+  disconnect: [ReviewWhereUniqueInput!]
+  update: [ReviewUpdateWithWhereUniqueWithoutCreatedByInput!]
+  upsert: [ReviewUpsertWithWhereUniqueWithoutCreatedByInput!]
+  deleteMany: [ReviewScalarWhereInput!]
+  updateMany: [ReviewUpdateManyWithWhereNestedInput!]
+}
+
+input ReviewUpdateManyWithWhereNestedInput {
+  where: ReviewScalarWhereInput!
+  data: ReviewUpdateManyDataInput!
+}
+
+input ReviewUpdateWithoutBathroomParentDataInput {
+  title: String
+  description: String
+  createdBy: UserUpdateOneWithoutReviewsInput
+}
+
+input ReviewUpdateWithoutCreatedByDataInput {
+  title: String
+  description: String
+  bathroomParent: BathroomUpdateOneWithoutReviewsInput
+}
+
+input ReviewUpdateWithWhereUniqueWithoutBathroomParentInput {
+  where: ReviewWhereUniqueInput!
+  data: ReviewUpdateWithoutBathroomParentDataInput!
+}
+
+input ReviewUpdateWithWhereUniqueWithoutCreatedByInput {
+  where: ReviewWhereUniqueInput!
+  data: ReviewUpdateWithoutCreatedByDataInput!
+}
+
+input ReviewUpsertWithWhereUniqueWithoutBathroomParentInput {
+  where: ReviewWhereUniqueInput!
+  update: ReviewUpdateWithoutBathroomParentDataInput!
+  create: ReviewCreateWithoutBathroomParentInput!
+}
+
+input ReviewUpsertWithWhereUniqueWithoutCreatedByInput {
+  where: ReviewWhereUniqueInput!
+  update: ReviewUpdateWithoutCreatedByDataInput!
+  create: ReviewCreateWithoutCreatedByInput!
+}
+
+input ReviewWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  createdBy: UserWhereInput
+  bathroomParent: BathroomWhereInput
+  AND: [ReviewWhereInput!]
+  OR: [ReviewWhereInput!]
+  NOT: [ReviewWhereInput!]
+}
+
+input ReviewWhereUniqueInput {
+  id: ID
+}
+
 type Subscription {
-  link(where: LinkSubscriptionWhereInput): LinkSubscriptionPayload
+  bathroom(where: BathroomSubscriptionWhereInput): BathroomSubscriptionPayload
+  review(where: ReviewSubscriptionWhereInput): ReviewSubscriptionPayload
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  password: String!
+  bathrooms(where: BathroomWhereInput, orderBy: BathroomOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Bathroom!]
+  reviews(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Review!]
+  bookmark(where: BathroomWhereInput, orderBy: BathroomOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Bathroom!]
+}
+
+type UserConnection {
+  pageInfo: PageInfo!
+  edges: [UserEdge]!
+  aggregate: AggregateUser!
+}
+
+input UserCreateInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  bathrooms: BathroomCreateManyWithoutCreatedByInput
+  reviews: ReviewCreateManyWithoutCreatedByInput
+  bookmark: BathroomCreateManyWithoutBookmarkedByInput
+}
+
+input UserCreateManyWithoutBookmarkInput {
+  create: [UserCreateWithoutBookmarkInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateOneWithoutBathroomsInput {
+  create: UserCreateWithoutBathroomsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutReviewsInput {
+  create: UserCreateWithoutReviewsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutBathroomsInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  reviews: ReviewCreateManyWithoutCreatedByInput
+  bookmark: BathroomCreateManyWithoutBookmarkedByInput
+}
+
+input UserCreateWithoutBookmarkInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  bathrooms: BathroomCreateManyWithoutCreatedByInput
+  reviews: ReviewCreateManyWithoutCreatedByInput
+}
+
+input UserCreateWithoutReviewsInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  bathrooms: BathroomCreateManyWithoutCreatedByInput
+  bookmark: BathroomCreateManyWithoutBookmarkedByInput
+}
+
+type UserEdge {
+  node: User!
+  cursor: String!
+}
+
+enum UserOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  email_ASC
+  email_DESC
+  password_ASC
+  password_DESC
+}
+
+type UserPreviousValues {
+  id: ID!
+  name: String!
+  email: String!
+  password: String!
+}
+
+input UserScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  password: String
+  password_not: String
+  password_in: [String!]
+  password_not_in: [String!]
+  password_lt: String
+  password_lte: String
+  password_gt: String
+  password_gte: String
+  password_contains: String
+  password_not_contains: String
+  password_starts_with: String
+  password_not_starts_with: String
+  password_ends_with: String
+  password_not_ends_with: String
+  AND: [UserScalarWhereInput!]
+  OR: [UserScalarWhereInput!]
+  NOT: [UserScalarWhereInput!]
+}
+
+type UserSubscriptionPayload {
+  mutation: MutationType!
+  node: User
+  updatedFields: [String!]
+  previousValues: UserPreviousValues
+}
+
+input UserSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: UserWhereInput
+  AND: [UserSubscriptionWhereInput!]
+  OR: [UserSubscriptionWhereInput!]
+  NOT: [UserSubscriptionWhereInput!]
+}
+
+input UserUpdateInput {
+  name: String
+  email: String
+  password: String
+  bathrooms: BathroomUpdateManyWithoutCreatedByInput
+  reviews: ReviewUpdateManyWithoutCreatedByInput
+  bookmark: BathroomUpdateManyWithoutBookmarkedByInput
+}
+
+input UserUpdateManyDataInput {
+  name: String
+  email: String
+  password: String
+}
+
+input UserUpdateManyMutationInput {
+  name: String
+  email: String
+  password: String
+}
+
+input UserUpdateManyWithoutBookmarkInput {
+  create: [UserCreateWithoutBookmarkInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutBookmarkInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutBookmarkInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+}
+
+input UserUpdateManyWithWhereNestedInput {
+  where: UserScalarWhereInput!
+  data: UserUpdateManyDataInput!
+}
+
+input UserUpdateOneWithoutBathroomsInput {
+  create: UserCreateWithoutBathroomsInput
+  update: UserUpdateWithoutBathroomsDataInput
+  upsert: UserUpsertWithoutBathroomsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneWithoutReviewsInput {
+  create: UserCreateWithoutReviewsInput
+  update: UserUpdateWithoutReviewsDataInput
+  upsert: UserUpsertWithoutReviewsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateWithoutBathroomsDataInput {
+  name: String
+  email: String
+  password: String
+  reviews: ReviewUpdateManyWithoutCreatedByInput
+  bookmark: BathroomUpdateManyWithoutBookmarkedByInput
+}
+
+input UserUpdateWithoutBookmarkDataInput {
+  name: String
+  email: String
+  password: String
+  bathrooms: BathroomUpdateManyWithoutCreatedByInput
+  reviews: ReviewUpdateManyWithoutCreatedByInput
+}
+
+input UserUpdateWithoutReviewsDataInput {
+  name: String
+  email: String
+  password: String
+  bathrooms: BathroomUpdateManyWithoutCreatedByInput
+  bookmark: BathroomUpdateManyWithoutBookmarkedByInput
+}
+
+input UserUpdateWithWhereUniqueWithoutBookmarkInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutBookmarkDataInput!
+}
+
+input UserUpsertWithoutBathroomsInput {
+  update: UserUpdateWithoutBathroomsDataInput!
+  create: UserCreateWithoutBathroomsInput!
+}
+
+input UserUpsertWithoutReviewsInput {
+  update: UserUpdateWithoutReviewsDataInput!
+  create: UserCreateWithoutReviewsInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutBookmarkInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutBookmarkDataInput!
+  create: UserCreateWithoutBookmarkInput!
+}
+
+input UserWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  password: String
+  password_not: String
+  password_in: [String!]
+  password_not_in: [String!]
+  password_lt: String
+  password_lte: String
+  password_gt: String
+  password_gte: String
+  password_contains: String
+  password_not_contains: String
+  password_starts_with: String
+  password_not_starts_with: String
+  password_ends_with: String
+  password_not_ends_with: String
+  bathrooms_every: BathroomWhereInput
+  bathrooms_some: BathroomWhereInput
+  bathrooms_none: BathroomWhereInput
+  reviews_every: ReviewWhereInput
+  reviews_some: ReviewWhereInput
+  reviews_none: ReviewWhereInput
+  bookmark_every: BathroomWhereInput
+  bookmark_some: BathroomWhereInput
+  bookmark_none: BathroomWhereInput
+  AND: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  NOT: [UserWhereInput!]
+}
+
+input UserWhereUniqueInput {
+  id: ID
 }
 `
       }

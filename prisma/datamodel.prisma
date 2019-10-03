@@ -1,17 +1,16 @@
 type Bathroom {
     id: ID! @id
     createdAt: DateTime! @createdAt
-    businessName: String
+    businessName: String @default(value: "Public Restroom")
     description: String!
     address: String!
     lat: Float!
     lng: Float!
-    purchaseRequired: Boolean! @default(value: "false") 
-    genderNeutral: Boolean! @default(value: "false")
-    accessibleStall: Boolean! @default(value: "false")
-    // Relational Links
-    createdBy: User
-    bookmarkedBy: [User!]!
+    purchaseRequired: Boolean! @default(value: false)
+    genderNeutral: Boolean! @default(value: false)
+    accessibleStall: Boolean! @default(value: false)
+    createdBy: User @relation(name: "Creator")
+    bookmarkedBy: [User!]! @relation(name: "Saver")
     reviews: [Review!]!
 }
 
@@ -19,19 +18,16 @@ type Review {
     id: ID! @id
     title: String!
     description: String!
-    // Relational Links
     createdBy: User
     bathroomParent: Bathroom
 }
 
 type User {
-    // May need to change user ID
     id: ID! @id
     name: String!
     email: String!
     password: String!
-    // Relational Links
-    bathrooms: [Bathroom!]!
+    bathrooms: [Bathroom!]! @relation(name: "Creator")
     reviews: [Review!]!
-    bookmark: [Bathroom!]!
+    bookmark: [Bathroom!]! @relation(name: "Saver")
 }
