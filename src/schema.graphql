@@ -7,6 +7,8 @@ type Mutation {
 
     login(email: String!, password: String!): AuthPayload
 
+    bookmark(bathroomId: ID!): Bookmark
+
     postBathroom(
         businessName: String,
         description: String!,
@@ -65,6 +67,7 @@ type Bathroom {
     accessibleStall: Boolean!
     singleOccupancy: Boolean!
     reviews: [Review!]!
+    bookmarks: [Bookmark!]!
     postedBy: User
 }
 
@@ -92,4 +95,10 @@ type AuthPayload {
 type Feed {
     bathrooms: [Bathroom!]!
     count: Int!
+}
+
+type Bookmark {
+    id: ID!
+    bathroom: Bathroom!
+    user: User!
 }

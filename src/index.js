@@ -5,6 +5,7 @@ const Query = require('./resolvers/Query');
 const User = require('./resolvers/User');
 const Bathroom = require('./resolvers/Bathroom');
 const Review = require('./resolvers/Review');
+const Bookmark = require('./resolvers/Bookmark');
 
 const resolvers = {
     Mutation,
@@ -12,6 +13,7 @@ const resolvers = {
     User,
     Bathroom,
     Review,
+    Bookmark,
 };
 
 const server = new GraphQLServer({

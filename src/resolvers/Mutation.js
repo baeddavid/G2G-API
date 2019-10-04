@@ -89,6 +89,21 @@ async function deleteReview(parent, args, context, info) {
     return context.prisma.deleteReview({ id: `${args.id}` });
 }
 
+async function bookmark(parent, args, context, info) {
+    const userId = getUserId(context);
+    const bathroomExists = await context.prisma.$exists.bookmark({
+        user: { id: userId },
+        bathroom: { id: args.bathroomId },
+    });
+
+    if(bathroomExists) throw new Error('Already bookmarked!');
+
+    return context.prisma.createBookmark({
+        user: { connect: { id: userId } },
+        bathroom: { connect: { id: args.bathroomId } },
+    });
+}
+
 module.exports = {
     postBathroom,
     postReview,
@@ -98,4 +113,5 @@ module.exports = {
     deleteReview,
     signup,
     login,
+    bookmark,
 };

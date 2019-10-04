@@ -10,8 +10,9 @@
     genderNeutral: Boolean! @default(value: false)
     accessibleStall: Boolean! @default(value: false)
     singleOccupancy: Boolean! @default(value: false)
-    postedBy: User 
+    postedBy: User @relation(name: "Creator")
     reviews: [Review!]!
+    bookmarkedBy: [Bookmark!]!
 }
 
 type Review {
@@ -22,11 +23,18 @@ type Review {
     bathroom: Bathroom
 }
 
+type Bookmark  {
+    id: ID! @id
+    bathroom: Bathroom!
+    user: User!
+}
+
 type User {
     id: ID! @id
     name: String!
     email: String! @unique
     password: String!
-    bathrooms: [Bathroom!]! 
+    bathrooms: [Bathroom!]! @relation(name: "Creator")
     reviews: [Review!]!
+    bookmark: [Bookmark!]!
 }
