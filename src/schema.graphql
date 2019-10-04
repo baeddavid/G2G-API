@@ -1,3 +1,9 @@
+# TODO 
+# Change genderNeutral to enumerate 3 options DONE
+# Changing Stations DONE
+# Bathroom Category enumerate 3 options DONE
+# tentative - directions 
+
 type Query {
     feed(filter: String, skip: Int, first: Int): Feed!
     getClosest(currentLat: Float!, currentLng: Float!): Feed!
@@ -16,10 +22,13 @@ type Mutation {
         businessName: String,
         description: String!,
         address: String!,
+        genderNeutral: String!,
+        category: String!,
+        directions: String!,
         lat: Float!,
         lng: Float!,
+        changingStations: Boolean!,
         purchaseRequired: Boolean!,
-        genderNeutral: Boolean!,
         accessibleStall: Boolean!,
         singleOccupancy: Boolean!,
     ): Bathroom!
@@ -35,10 +44,13 @@ type Mutation {
         businessName: String,
         description: String!,
         address: String!,
+        genderNeutral: String!,
+        category: String!,
+        directions: String!,
         lat: Float!,
         lng: Float!,
+        changingStations: Boolean!,
         purchaseRequired: Boolean!,
-        genderNeutral: Boolean!,
         accessibleStall: Boolean!,
         singleOccupancy: Boolean!, 
     ): Bathroom!
@@ -63,10 +75,13 @@ type Bathroom {
     businessName: String
     description: String!
     address: String!
+    genderNeutral: String!
+    category: String!
+    directions: String!
     lat: Float!
     lng: Float!
+    changingStations: Boolean!
     purchaseRequired: Boolean!
-    genderNeutral: Boolean!
     accessibleStall: Boolean!
     singleOccupancy: Boolean!
     reviews: [Review!]!

@@ -4,10 +4,13 @@
     businessName: String @default(value: "Public Restroom")
     description: String!
     address: String!
+    category: String!
+    genderNeutral: String!
+    directions: String!
     lat: Float!
     lng: Float!
+    changingStations: Boolean! @default(value: false)
     purchaseRequired: Boolean! @default(value: false)
-    genderNeutral: Boolean! @default(value: false)
     accessibleStall: Boolean! @default(value: false)
     singleOccupancy: Boolean! @default(value: false)
     postedBy: User @relation(name: "Creator")

@@ -225,14 +225,20 @@ export type BathroomOrderByInput =
   | "description_DESC"
   | "address_ASC"
   | "address_DESC"
+  | "category_ASC"
+  | "category_DESC"
+  | "genderNeutral_ASC"
+  | "genderNeutral_DESC"
+  | "directions_ASC"
+  | "directions_DESC"
   | "lat_ASC"
   | "lat_DESC"
   | "lng_ASC"
   | "lng_DESC"
+  | "changingStations_ASC"
+  | "changingStations_DESC"
   | "purchaseRequired_ASC"
   | "purchaseRequired_DESC"
-  | "genderNeutral_ASC"
-  | "genderNeutral_DESC"
   | "accessibleStall_ASC"
   | "accessibleStall_DESC"
   | "singleOccupancy_ASC"
@@ -329,6 +335,48 @@ export interface BathroomWhereInput {
   address_not_starts_with?: Maybe<String>;
   address_ends_with?: Maybe<String>;
   address_not_ends_with?: Maybe<String>;
+  category?: Maybe<String>;
+  category_not?: Maybe<String>;
+  category_in?: Maybe<String[] | String>;
+  category_not_in?: Maybe<String[] | String>;
+  category_lt?: Maybe<String>;
+  category_lte?: Maybe<String>;
+  category_gt?: Maybe<String>;
+  category_gte?: Maybe<String>;
+  category_contains?: Maybe<String>;
+  category_not_contains?: Maybe<String>;
+  category_starts_with?: Maybe<String>;
+  category_not_starts_with?: Maybe<String>;
+  category_ends_with?: Maybe<String>;
+  category_not_ends_with?: Maybe<String>;
+  genderNeutral?: Maybe<String>;
+  genderNeutral_not?: Maybe<String>;
+  genderNeutral_in?: Maybe<String[] | String>;
+  genderNeutral_not_in?: Maybe<String[] | String>;
+  genderNeutral_lt?: Maybe<String>;
+  genderNeutral_lte?: Maybe<String>;
+  genderNeutral_gt?: Maybe<String>;
+  genderNeutral_gte?: Maybe<String>;
+  genderNeutral_contains?: Maybe<String>;
+  genderNeutral_not_contains?: Maybe<String>;
+  genderNeutral_starts_with?: Maybe<String>;
+  genderNeutral_not_starts_with?: Maybe<String>;
+  genderNeutral_ends_with?: Maybe<String>;
+  genderNeutral_not_ends_with?: Maybe<String>;
+  directions?: Maybe<String>;
+  directions_not?: Maybe<String>;
+  directions_in?: Maybe<String[] | String>;
+  directions_not_in?: Maybe<String[] | String>;
+  directions_lt?: Maybe<String>;
+  directions_lte?: Maybe<String>;
+  directions_gt?: Maybe<String>;
+  directions_gte?: Maybe<String>;
+  directions_contains?: Maybe<String>;
+  directions_not_contains?: Maybe<String>;
+  directions_starts_with?: Maybe<String>;
+  directions_not_starts_with?: Maybe<String>;
+  directions_ends_with?: Maybe<String>;
+  directions_not_ends_with?: Maybe<String>;
   lat?: Maybe<Float>;
   lat_not?: Maybe<Float>;
   lat_in?: Maybe<Float[] | Float>;
@@ -345,10 +393,10 @@ export interface BathroomWhereInput {
   lng_lte?: Maybe<Float>;
   lng_gt?: Maybe<Float>;
   lng_gte?: Maybe<Float>;
+  changingStations?: Maybe<Boolean>;
+  changingStations_not?: Maybe<Boolean>;
   purchaseRequired?: Maybe<Boolean>;
   purchaseRequired_not?: Maybe<Boolean>;
-  genderNeutral?: Maybe<Boolean>;
-  genderNeutral_not?: Maybe<Boolean>;
   accessibleStall?: Maybe<Boolean>;
   accessibleStall_not?: Maybe<Boolean>;
   singleOccupancy?: Maybe<Boolean>;
@@ -526,10 +574,13 @@ export interface BathroomCreateInput {
   businessName?: Maybe<String>;
   description: String;
   address: String;
+  category: String;
+  genderNeutral: String;
+  directions: String;
   lat: Float;
   lng: Float;
+  changingStations?: Maybe<Boolean>;
   purchaseRequired?: Maybe<Boolean>;
-  genderNeutral?: Maybe<Boolean>;
   accessibleStall?: Maybe<Boolean>;
   singleOccupancy?: Maybe<Boolean>;
   postedBy?: Maybe<UserCreateOneWithoutBathroomsInput>;
@@ -575,10 +626,13 @@ export interface BathroomCreateWithoutReviewsInput {
   businessName?: Maybe<String>;
   description: String;
   address: String;
+  category: String;
+  genderNeutral: String;
+  directions: String;
   lat: Float;
   lng: Float;
+  changingStations?: Maybe<Boolean>;
   purchaseRequired?: Maybe<Boolean>;
-  genderNeutral?: Maybe<Boolean>;
   accessibleStall?: Maybe<Boolean>;
   singleOccupancy?: Maybe<Boolean>;
   postedBy?: Maybe<UserCreateOneWithoutBathroomsInput>;
@@ -623,10 +677,13 @@ export interface BathroomCreateWithoutPostedByInput {
   businessName?: Maybe<String>;
   description: String;
   address: String;
+  category: String;
+  genderNeutral: String;
+  directions: String;
   lat: Float;
   lng: Float;
+  changingStations?: Maybe<Boolean>;
   purchaseRequired?: Maybe<Boolean>;
-  genderNeutral?: Maybe<Boolean>;
   accessibleStall?: Maybe<Boolean>;
   singleOccupancy?: Maybe<Boolean>;
   reviews?: Maybe<ReviewCreateManyWithoutBathroomInput>;
@@ -683,10 +740,13 @@ export interface BathroomCreateWithoutBookmarksInput {
   businessName?: Maybe<String>;
   description: String;
   address: String;
+  category: String;
+  genderNeutral: String;
+  directions: String;
   lat: Float;
   lng: Float;
+  changingStations?: Maybe<Boolean>;
   purchaseRequired?: Maybe<Boolean>;
-  genderNeutral?: Maybe<Boolean>;
   accessibleStall?: Maybe<Boolean>;
   singleOccupancy?: Maybe<Boolean>;
   postedBy?: Maybe<UserCreateOneWithoutBathroomsInput>;
@@ -697,10 +757,13 @@ export interface BathroomUpdateInput {
   businessName?: Maybe<String>;
   description?: Maybe<String>;
   address?: Maybe<String>;
+  category?: Maybe<String>;
+  genderNeutral?: Maybe<String>;
+  directions?: Maybe<String>;
   lat?: Maybe<Float>;
   lng?: Maybe<Float>;
+  changingStations?: Maybe<Boolean>;
   purchaseRequired?: Maybe<Boolean>;
-  genderNeutral?: Maybe<Boolean>;
   accessibleStall?: Maybe<Boolean>;
   singleOccupancy?: Maybe<Boolean>;
   postedBy?: Maybe<UserUpdateOneWithoutBathroomsInput>;
@@ -772,10 +835,13 @@ export interface BathroomUpdateWithoutReviewsDataInput {
   businessName?: Maybe<String>;
   description?: Maybe<String>;
   address?: Maybe<String>;
+  category?: Maybe<String>;
+  genderNeutral?: Maybe<String>;
+  directions?: Maybe<String>;
   lat?: Maybe<Float>;
   lng?: Maybe<Float>;
+  changingStations?: Maybe<Boolean>;
   purchaseRequired?: Maybe<Boolean>;
-  genderNeutral?: Maybe<Boolean>;
   accessibleStall?: Maybe<Boolean>;
   singleOccupancy?: Maybe<Boolean>;
   postedBy?: Maybe<UserUpdateOneWithoutBathroomsInput>;
@@ -857,10 +923,13 @@ export interface BathroomUpdateWithoutPostedByDataInput {
   businessName?: Maybe<String>;
   description?: Maybe<String>;
   address?: Maybe<String>;
+  category?: Maybe<String>;
+  genderNeutral?: Maybe<String>;
+  directions?: Maybe<String>;
   lat?: Maybe<Float>;
   lng?: Maybe<Float>;
+  changingStations?: Maybe<Boolean>;
   purchaseRequired?: Maybe<Boolean>;
-  genderNeutral?: Maybe<Boolean>;
   accessibleStall?: Maybe<Boolean>;
   singleOccupancy?: Maybe<Boolean>;
   reviews?: Maybe<ReviewUpdateManyWithoutBathroomInput>;
@@ -955,10 +1024,13 @@ export interface BathroomUpdateWithoutBookmarksDataInput {
   businessName?: Maybe<String>;
   description?: Maybe<String>;
   address?: Maybe<String>;
+  category?: Maybe<String>;
+  genderNeutral?: Maybe<String>;
+  directions?: Maybe<String>;
   lat?: Maybe<Float>;
   lng?: Maybe<Float>;
+  changingStations?: Maybe<Boolean>;
   purchaseRequired?: Maybe<Boolean>;
-  genderNeutral?: Maybe<Boolean>;
   accessibleStall?: Maybe<Boolean>;
   singleOccupancy?: Maybe<Boolean>;
   postedBy?: Maybe<UserUpdateOneWithoutBathroomsInput>;
@@ -1136,6 +1208,48 @@ export interface BathroomScalarWhereInput {
   address_not_starts_with?: Maybe<String>;
   address_ends_with?: Maybe<String>;
   address_not_ends_with?: Maybe<String>;
+  category?: Maybe<String>;
+  category_not?: Maybe<String>;
+  category_in?: Maybe<String[] | String>;
+  category_not_in?: Maybe<String[] | String>;
+  category_lt?: Maybe<String>;
+  category_lte?: Maybe<String>;
+  category_gt?: Maybe<String>;
+  category_gte?: Maybe<String>;
+  category_contains?: Maybe<String>;
+  category_not_contains?: Maybe<String>;
+  category_starts_with?: Maybe<String>;
+  category_not_starts_with?: Maybe<String>;
+  category_ends_with?: Maybe<String>;
+  category_not_ends_with?: Maybe<String>;
+  genderNeutral?: Maybe<String>;
+  genderNeutral_not?: Maybe<String>;
+  genderNeutral_in?: Maybe<String[] | String>;
+  genderNeutral_not_in?: Maybe<String[] | String>;
+  genderNeutral_lt?: Maybe<String>;
+  genderNeutral_lte?: Maybe<String>;
+  genderNeutral_gt?: Maybe<String>;
+  genderNeutral_gte?: Maybe<String>;
+  genderNeutral_contains?: Maybe<String>;
+  genderNeutral_not_contains?: Maybe<String>;
+  genderNeutral_starts_with?: Maybe<String>;
+  genderNeutral_not_starts_with?: Maybe<String>;
+  genderNeutral_ends_with?: Maybe<String>;
+  genderNeutral_not_ends_with?: Maybe<String>;
+  directions?: Maybe<String>;
+  directions_not?: Maybe<String>;
+  directions_in?: Maybe<String[] | String>;
+  directions_not_in?: Maybe<String[] | String>;
+  directions_lt?: Maybe<String>;
+  directions_lte?: Maybe<String>;
+  directions_gt?: Maybe<String>;
+  directions_gte?: Maybe<String>;
+  directions_contains?: Maybe<String>;
+  directions_not_contains?: Maybe<String>;
+  directions_starts_with?: Maybe<String>;
+  directions_not_starts_with?: Maybe<String>;
+  directions_ends_with?: Maybe<String>;
+  directions_not_ends_with?: Maybe<String>;
   lat?: Maybe<Float>;
   lat_not?: Maybe<Float>;
   lat_in?: Maybe<Float[] | Float>;
@@ -1152,10 +1266,10 @@ export interface BathroomScalarWhereInput {
   lng_lte?: Maybe<Float>;
   lng_gt?: Maybe<Float>;
   lng_gte?: Maybe<Float>;
+  changingStations?: Maybe<Boolean>;
+  changingStations_not?: Maybe<Boolean>;
   purchaseRequired?: Maybe<Boolean>;
   purchaseRequired_not?: Maybe<Boolean>;
-  genderNeutral?: Maybe<Boolean>;
-  genderNeutral_not?: Maybe<Boolean>;
   accessibleStall?: Maybe<Boolean>;
   accessibleStall_not?: Maybe<Boolean>;
   singleOccupancy?: Maybe<Boolean>;
@@ -1174,10 +1288,13 @@ export interface BathroomUpdateManyDataInput {
   businessName?: Maybe<String>;
   description?: Maybe<String>;
   address?: Maybe<String>;
+  category?: Maybe<String>;
+  genderNeutral?: Maybe<String>;
+  directions?: Maybe<String>;
   lat?: Maybe<Float>;
   lng?: Maybe<Float>;
+  changingStations?: Maybe<Boolean>;
   purchaseRequired?: Maybe<Boolean>;
-  genderNeutral?: Maybe<Boolean>;
   accessibleStall?: Maybe<Boolean>;
   singleOccupancy?: Maybe<Boolean>;
 }
@@ -1213,10 +1330,13 @@ export interface BathroomUpdateManyMutationInput {
   businessName?: Maybe<String>;
   description?: Maybe<String>;
   address?: Maybe<String>;
+  category?: Maybe<String>;
+  genderNeutral?: Maybe<String>;
+  directions?: Maybe<String>;
   lat?: Maybe<Float>;
   lng?: Maybe<Float>;
+  changingStations?: Maybe<Boolean>;
   purchaseRequired?: Maybe<Boolean>;
-  genderNeutral?: Maybe<Boolean>;
   accessibleStall?: Maybe<Boolean>;
   singleOccupancy?: Maybe<Boolean>;
 }
@@ -1339,10 +1459,13 @@ export interface Bathroom {
   businessName?: String;
   description: String;
   address: String;
+  category: String;
+  genderNeutral: String;
+  directions: String;
   lat: Float;
   lng: Float;
+  changingStations: Boolean;
   purchaseRequired: Boolean;
-  genderNeutral: Boolean;
   accessibleStall: Boolean;
   singleOccupancy: Boolean;
 }
@@ -1353,10 +1476,13 @@ export interface BathroomPromise extends Promise<Bathroom>, Fragmentable {
   businessName: () => Promise<String>;
   description: () => Promise<String>;
   address: () => Promise<String>;
+  category: () => Promise<String>;
+  genderNeutral: () => Promise<String>;
+  directions: () => Promise<String>;
   lat: () => Promise<Float>;
   lng: () => Promise<Float>;
+  changingStations: () => Promise<Boolean>;
   purchaseRequired: () => Promise<Boolean>;
-  genderNeutral: () => Promise<Boolean>;
   accessibleStall: () => Promise<Boolean>;
   singleOccupancy: () => Promise<Boolean>;
   postedBy: <T = UserPromise>() => T;
@@ -1388,10 +1514,13 @@ export interface BathroomSubscription
   businessName: () => Promise<AsyncIterator<String>>;
   description: () => Promise<AsyncIterator<String>>;
   address: () => Promise<AsyncIterator<String>>;
+  category: () => Promise<AsyncIterator<String>>;
+  genderNeutral: () => Promise<AsyncIterator<String>>;
+  directions: () => Promise<AsyncIterator<String>>;
   lat: () => Promise<AsyncIterator<Float>>;
   lng: () => Promise<AsyncIterator<Float>>;
+  changingStations: () => Promise<AsyncIterator<Boolean>>;
   purchaseRequired: () => Promise<AsyncIterator<Boolean>>;
-  genderNeutral: () => Promise<AsyncIterator<Boolean>>;
   accessibleStall: () => Promise<AsyncIterator<Boolean>>;
   singleOccupancy: () => Promise<AsyncIterator<Boolean>>;
   postedBy: <T = UserSubscription>() => T;
@@ -1423,10 +1552,13 @@ export interface BathroomNullablePromise
   businessName: () => Promise<String>;
   description: () => Promise<String>;
   address: () => Promise<String>;
+  category: () => Promise<String>;
+  genderNeutral: () => Promise<String>;
+  directions: () => Promise<String>;
   lat: () => Promise<Float>;
   lng: () => Promise<Float>;
+  changingStations: () => Promise<Boolean>;
   purchaseRequired: () => Promise<Boolean>;
-  genderNeutral: () => Promise<Boolean>;
   accessibleStall: () => Promise<Boolean>;
   singleOccupancy: () => Promise<Boolean>;
   postedBy: <T = UserPromise>() => T;
@@ -1913,10 +2045,13 @@ export interface BathroomPreviousValues {
   businessName?: String;
   description: String;
   address: String;
+  category: String;
+  genderNeutral: String;
+  directions: String;
   lat: Float;
   lng: Float;
+  changingStations: Boolean;
   purchaseRequired: Boolean;
-  genderNeutral: Boolean;
   accessibleStall: Boolean;
   singleOccupancy: Boolean;
 }
@@ -1929,10 +2064,13 @@ export interface BathroomPreviousValuesPromise
   businessName: () => Promise<String>;
   description: () => Promise<String>;
   address: () => Promise<String>;
+  category: () => Promise<String>;
+  genderNeutral: () => Promise<String>;
+  directions: () => Promise<String>;
   lat: () => Promise<Float>;
   lng: () => Promise<Float>;
+  changingStations: () => Promise<Boolean>;
   purchaseRequired: () => Promise<Boolean>;
-  genderNeutral: () => Promise<Boolean>;
   accessibleStall: () => Promise<Boolean>;
   singleOccupancy: () => Promise<Boolean>;
 }
@@ -1945,10 +2083,13 @@ export interface BathroomPreviousValuesSubscription
   businessName: () => Promise<AsyncIterator<String>>;
   description: () => Promise<AsyncIterator<String>>;
   address: () => Promise<AsyncIterator<String>>;
+  category: () => Promise<AsyncIterator<String>>;
+  genderNeutral: () => Promise<AsyncIterator<String>>;
+  directions: () => Promise<AsyncIterator<String>>;
   lat: () => Promise<AsyncIterator<Float>>;
   lng: () => Promise<AsyncIterator<Float>>;
+  changingStations: () => Promise<AsyncIterator<Boolean>>;
   purchaseRequired: () => Promise<AsyncIterator<Boolean>>;
-  genderNeutral: () => Promise<AsyncIterator<Boolean>>;
   accessibleStall: () => Promise<AsyncIterator<Boolean>>;
   singleOccupancy: () => Promise<AsyncIterator<Boolean>>;
 }
