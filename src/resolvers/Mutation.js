@@ -24,7 +24,7 @@ async function login(parent, args, context, info) {
     
     return {
         token,
-        userm
+        user
     }
 }
 
