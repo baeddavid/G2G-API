@@ -38,7 +38,7 @@ async function getClosest(parent, args, context, info) {
             ]
         }]
     };
-    console.log(where)
+
     const bathrooms = await context.prisma.bathrooms({
         where,
     });
