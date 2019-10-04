@@ -1,4 +1,4 @@
-type Bathroom {
+  type Bathroom {
     id: ID! @id
     createdAt: DateTime! @createdAt
     businessName: String @default(value: "Public Restroom")
@@ -10,8 +10,7 @@ type Bathroom {
     genderNeutral: Boolean! @default(value: false)
     accessibleStall: Boolean! @default(value: false)
     singleOccupancy: Boolean! @default(value: false)
-    createdBy: User @relation(name: "Creator")
-    bookmarkedBy: [User!]! @relation(name: "Saver")
+    postedBy: User 
     reviews: [Review!]!
 }
 
@@ -19,16 +18,15 @@ type Review {
     id: ID! @id
     title: String!
     description: String!
-    createdBy: User
-    bathroomParent: Bathroom
+    createdBy: User!
+    bathroom: Bathroom
 }
 
 type User {
     id: ID! @id
     name: String!
-    email: String!
+    email: String! @unique
     password: String!
-    bathrooms: [Bathroom!]! @relation(name: "Creator")
+    bathrooms: [Bathroom!]! 
     reviews: [Review!]!
-    bookmark: [Bathroom!]! @relation(name: "Saver")
 }

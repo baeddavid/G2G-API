@@ -316,10 +316,7 @@ export interface BathroomWhereInput {
   accessibleStall_not?: Maybe<Boolean>;
   singleOccupancy?: Maybe<Boolean>;
   singleOccupancy_not?: Maybe<Boolean>;
-  createdBy?: Maybe<UserWhereInput>;
-  bookmarkedBy_every?: Maybe<UserWhereInput>;
-  bookmarkedBy_some?: Maybe<UserWhereInput>;
-  bookmarkedBy_none?: Maybe<UserWhereInput>;
+  postedBy?: Maybe<UserWhereInput>;
   reviews_every?: Maybe<ReviewWhereInput>;
   reviews_some?: Maybe<ReviewWhereInput>;
   reviews_none?: Maybe<ReviewWhereInput>;
@@ -391,9 +388,6 @@ export interface UserWhereInput {
   reviews_every?: Maybe<ReviewWhereInput>;
   reviews_some?: Maybe<ReviewWhereInput>;
   reviews_none?: Maybe<ReviewWhereInput>;
-  bookmark_every?: Maybe<BathroomWhereInput>;
-  bookmark_some?: Maybe<BathroomWhereInput>;
-  bookmark_none?: Maybe<BathroomWhereInput>;
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
   OR?: Maybe<UserWhereInput[] | UserWhereInput>;
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
@@ -443,7 +437,7 @@ export interface ReviewWhereInput {
   description_ends_with?: Maybe<String>;
   description_not_ends_with?: Maybe<String>;
   createdBy?: Maybe<UserWhereInput>;
-  bathroomParent?: Maybe<BathroomWhereInput>;
+  bathroom?: Maybe<BathroomWhereInput>;
   AND?: Maybe<ReviewWhereInput[] | ReviewWhereInput>;
   OR?: Maybe<ReviewWhereInput[] | ReviewWhereInput>;
   NOT?: Maybe<ReviewWhereInput[] | ReviewWhereInput>;
@@ -455,6 +449,7 @@ export type ReviewWhereUniqueInput = AtLeastOne<{
 
 export type UserWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
+  email?: Maybe<String>;
 }>;
 
 export interface BathroomCreateInput {
@@ -468,9 +463,8 @@ export interface BathroomCreateInput {
   genderNeutral?: Maybe<Boolean>;
   accessibleStall?: Maybe<Boolean>;
   singleOccupancy?: Maybe<Boolean>;
-  createdBy?: Maybe<UserCreateOneWithoutBathroomsInput>;
-  bookmarkedBy?: Maybe<UserCreateManyWithoutBookmarkInput>;
-  reviews?: Maybe<ReviewCreateManyWithoutBathroomParentInput>;
+  postedBy?: Maybe<UserCreateOneWithoutBathroomsInput>;
+  reviews?: Maybe<ReviewCreateManyWithoutBathroomInput>;
 }
 
 export interface UserCreateOneWithoutBathroomsInput {
@@ -484,7 +478,6 @@ export interface UserCreateWithoutBathroomsInput {
   email: String;
   password: String;
   reviews?: Maybe<ReviewCreateManyWithoutCreatedByInput>;
-  bookmark?: Maybe<BathroomCreateManyWithoutBookmarkedByInput>;
 }
 
 export interface ReviewCreateManyWithoutCreatedByInput {
@@ -498,7 +491,7 @@ export interface ReviewCreateWithoutCreatedByInput {
   id?: Maybe<ID_Input>;
   title: String;
   description: String;
-  bathroomParent?: Maybe<BathroomCreateOneWithoutReviewsInput>;
+  bathroom?: Maybe<BathroomCreateOneWithoutReviewsInput>;
 }
 
 export interface BathroomCreateOneWithoutReviewsInput {
@@ -517,61 +510,21 @@ export interface BathroomCreateWithoutReviewsInput {
   genderNeutral?: Maybe<Boolean>;
   accessibleStall?: Maybe<Boolean>;
   singleOccupancy?: Maybe<Boolean>;
-  createdBy?: Maybe<UserCreateOneWithoutBathroomsInput>;
-  bookmarkedBy?: Maybe<UserCreateManyWithoutBookmarkInput>;
+  postedBy?: Maybe<UserCreateOneWithoutBathroomsInput>;
 }
 
-export interface UserCreateManyWithoutBookmarkInput {
+export interface ReviewCreateManyWithoutBathroomInput {
   create?: Maybe<
-    UserCreateWithoutBookmarkInput[] | UserCreateWithoutBookmarkInput
-  >;
-  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-}
-
-export interface UserCreateWithoutBookmarkInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  email: String;
-  password: String;
-  bathrooms?: Maybe<BathroomCreateManyWithoutCreatedByInput>;
-  reviews?: Maybe<ReviewCreateManyWithoutCreatedByInput>;
-}
-
-export interface BathroomCreateManyWithoutCreatedByInput {
-  create?: Maybe<
-    BathroomCreateWithoutCreatedByInput[] | BathroomCreateWithoutCreatedByInput
-  >;
-  connect?: Maybe<BathroomWhereUniqueInput[] | BathroomWhereUniqueInput>;
-}
-
-export interface BathroomCreateWithoutCreatedByInput {
-  id?: Maybe<ID_Input>;
-  businessName?: Maybe<String>;
-  description: String;
-  address: String;
-  lat: Float;
-  lng: Float;
-  purchaseRequired?: Maybe<Boolean>;
-  genderNeutral?: Maybe<Boolean>;
-  accessibleStall?: Maybe<Boolean>;
-  singleOccupancy?: Maybe<Boolean>;
-  bookmarkedBy?: Maybe<UserCreateManyWithoutBookmarkInput>;
-  reviews?: Maybe<ReviewCreateManyWithoutBathroomParentInput>;
-}
-
-export interface ReviewCreateManyWithoutBathroomParentInput {
-  create?: Maybe<
-    | ReviewCreateWithoutBathroomParentInput[]
-    | ReviewCreateWithoutBathroomParentInput
+    ReviewCreateWithoutBathroomInput[] | ReviewCreateWithoutBathroomInput
   >;
   connect?: Maybe<ReviewWhereUniqueInput[] | ReviewWhereUniqueInput>;
 }
 
-export interface ReviewCreateWithoutBathroomParentInput {
+export interface ReviewCreateWithoutBathroomInput {
   id?: Maybe<ID_Input>;
   title: String;
   description: String;
-  createdBy?: Maybe<UserCreateOneWithoutReviewsInput>;
+  createdBy: UserCreateOneWithoutReviewsInput;
 }
 
 export interface UserCreateOneWithoutReviewsInput {
@@ -584,19 +537,17 @@ export interface UserCreateWithoutReviewsInput {
   name: String;
   email: String;
   password: String;
-  bathrooms?: Maybe<BathroomCreateManyWithoutCreatedByInput>;
-  bookmark?: Maybe<BathroomCreateManyWithoutBookmarkedByInput>;
+  bathrooms?: Maybe<BathroomCreateManyWithoutPostedByInput>;
 }
 
-export interface BathroomCreateManyWithoutBookmarkedByInput {
+export interface BathroomCreateManyWithoutPostedByInput {
   create?: Maybe<
-    | BathroomCreateWithoutBookmarkedByInput[]
-    | BathroomCreateWithoutBookmarkedByInput
+    BathroomCreateWithoutPostedByInput[] | BathroomCreateWithoutPostedByInput
   >;
   connect?: Maybe<BathroomWhereUniqueInput[] | BathroomWhereUniqueInput>;
 }
 
-export interface BathroomCreateWithoutBookmarkedByInput {
+export interface BathroomCreateWithoutPostedByInput {
   id?: Maybe<ID_Input>;
   businessName?: Maybe<String>;
   description: String;
@@ -607,8 +558,7 @@ export interface BathroomCreateWithoutBookmarkedByInput {
   genderNeutral?: Maybe<Boolean>;
   accessibleStall?: Maybe<Boolean>;
   singleOccupancy?: Maybe<Boolean>;
-  createdBy?: Maybe<UserCreateOneWithoutBathroomsInput>;
-  reviews?: Maybe<ReviewCreateManyWithoutBathroomParentInput>;
+  reviews?: Maybe<ReviewCreateManyWithoutBathroomInput>;
 }
 
 export interface BathroomUpdateInput {
@@ -621,9 +571,8 @@ export interface BathroomUpdateInput {
   genderNeutral?: Maybe<Boolean>;
   accessibleStall?: Maybe<Boolean>;
   singleOccupancy?: Maybe<Boolean>;
-  createdBy?: Maybe<UserUpdateOneWithoutBathroomsInput>;
-  bookmarkedBy?: Maybe<UserUpdateManyWithoutBookmarkInput>;
-  reviews?: Maybe<ReviewUpdateManyWithoutBathroomParentInput>;
+  postedBy?: Maybe<UserUpdateOneWithoutBathroomsInput>;
+  reviews?: Maybe<ReviewUpdateManyWithoutBathroomInput>;
 }
 
 export interface UserUpdateOneWithoutBathroomsInput {
@@ -640,7 +589,6 @@ export interface UserUpdateWithoutBathroomsDataInput {
   email?: Maybe<String>;
   password?: Maybe<String>;
   reviews?: Maybe<ReviewUpdateManyWithoutCreatedByInput>;
-  bookmark?: Maybe<BathroomUpdateManyWithoutBookmarkedByInput>;
 }
 
 export interface ReviewUpdateManyWithoutCreatedByInput {
@@ -674,7 +622,7 @@ export interface ReviewUpdateWithWhereUniqueWithoutCreatedByInput {
 export interface ReviewUpdateWithoutCreatedByDataInput {
   title?: Maybe<String>;
   description?: Maybe<String>;
-  bathroomParent?: Maybe<BathroomUpdateOneWithoutReviewsInput>;
+  bathroom?: Maybe<BathroomUpdateOneWithoutReviewsInput>;
 }
 
 export interface BathroomUpdateOneWithoutReviewsInput {
@@ -696,103 +644,98 @@ export interface BathroomUpdateWithoutReviewsDataInput {
   genderNeutral?: Maybe<Boolean>;
   accessibleStall?: Maybe<Boolean>;
   singleOccupancy?: Maybe<Boolean>;
-  createdBy?: Maybe<UserUpdateOneWithoutBathroomsInput>;
-  bookmarkedBy?: Maybe<UserUpdateManyWithoutBookmarkInput>;
+  postedBy?: Maybe<UserUpdateOneWithoutBathroomsInput>;
 }
 
-export interface UserUpdateManyWithoutBookmarkInput {
-  create?: Maybe<
-    UserCreateWithoutBookmarkInput[] | UserCreateWithoutBookmarkInput
-  >;
-  delete?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  set?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  disconnect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  update?: Maybe<
-    | UserUpdateWithWhereUniqueWithoutBookmarkInput[]
-    | UserUpdateWithWhereUniqueWithoutBookmarkInput
-  >;
-  upsert?: Maybe<
-    | UserUpsertWithWhereUniqueWithoutBookmarkInput[]
-    | UserUpsertWithWhereUniqueWithoutBookmarkInput
-  >;
-  deleteMany?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
-  updateMany?: Maybe<
-    UserUpdateManyWithWhereNestedInput[] | UserUpdateManyWithWhereNestedInput
-  >;
+export interface BathroomUpsertWithoutReviewsInput {
+  update: BathroomUpdateWithoutReviewsDataInput;
+  create: BathroomCreateWithoutReviewsInput;
 }
 
-export interface UserUpdateWithWhereUniqueWithoutBookmarkInput {
-  where: UserWhereUniqueInput;
-  data: UserUpdateWithoutBookmarkDataInput;
+export interface ReviewUpsertWithWhereUniqueWithoutCreatedByInput {
+  where: ReviewWhereUniqueInput;
+  update: ReviewUpdateWithoutCreatedByDataInput;
+  create: ReviewCreateWithoutCreatedByInput;
 }
 
-export interface UserUpdateWithoutBookmarkDataInput {
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  bathrooms?: Maybe<BathroomUpdateManyWithoutCreatedByInput>;
-  reviews?: Maybe<ReviewUpdateManyWithoutCreatedByInput>;
-}
-
-export interface BathroomUpdateManyWithoutCreatedByInput {
-  create?: Maybe<
-    BathroomCreateWithoutCreatedByInput[] | BathroomCreateWithoutCreatedByInput
-  >;
-  delete?: Maybe<BathroomWhereUniqueInput[] | BathroomWhereUniqueInput>;
-  connect?: Maybe<BathroomWhereUniqueInput[] | BathroomWhereUniqueInput>;
-  set?: Maybe<BathroomWhereUniqueInput[] | BathroomWhereUniqueInput>;
-  disconnect?: Maybe<BathroomWhereUniqueInput[] | BathroomWhereUniqueInput>;
-  update?: Maybe<
-    | BathroomUpdateWithWhereUniqueWithoutCreatedByInput[]
-    | BathroomUpdateWithWhereUniqueWithoutCreatedByInput
-  >;
-  upsert?: Maybe<
-    | BathroomUpsertWithWhereUniqueWithoutCreatedByInput[]
-    | BathroomUpsertWithWhereUniqueWithoutCreatedByInput
-  >;
-  deleteMany?: Maybe<BathroomScalarWhereInput[] | BathroomScalarWhereInput>;
-  updateMany?: Maybe<
-    | BathroomUpdateManyWithWhereNestedInput[]
-    | BathroomUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface BathroomUpdateWithWhereUniqueWithoutCreatedByInput {
-  where: BathroomWhereUniqueInput;
-  data: BathroomUpdateWithoutCreatedByDataInput;
-}
-
-export interface BathroomUpdateWithoutCreatedByDataInput {
-  businessName?: Maybe<String>;
+export interface ReviewScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
   description?: Maybe<String>;
-  address?: Maybe<String>;
-  lat?: Maybe<Float>;
-  lng?: Maybe<Float>;
-  purchaseRequired?: Maybe<Boolean>;
-  genderNeutral?: Maybe<Boolean>;
-  accessibleStall?: Maybe<Boolean>;
-  singleOccupancy?: Maybe<Boolean>;
-  bookmarkedBy?: Maybe<UserUpdateManyWithoutBookmarkInput>;
-  reviews?: Maybe<ReviewUpdateManyWithoutBathroomParentInput>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
+  AND?: Maybe<ReviewScalarWhereInput[] | ReviewScalarWhereInput>;
+  OR?: Maybe<ReviewScalarWhereInput[] | ReviewScalarWhereInput>;
+  NOT?: Maybe<ReviewScalarWhereInput[] | ReviewScalarWhereInput>;
 }
 
-export interface ReviewUpdateManyWithoutBathroomParentInput {
+export interface ReviewUpdateManyWithWhereNestedInput {
+  where: ReviewScalarWhereInput;
+  data: ReviewUpdateManyDataInput;
+}
+
+export interface ReviewUpdateManyDataInput {
+  title?: Maybe<String>;
+  description?: Maybe<String>;
+}
+
+export interface UserUpsertWithoutBathroomsInput {
+  update: UserUpdateWithoutBathroomsDataInput;
+  create: UserCreateWithoutBathroomsInput;
+}
+
+export interface ReviewUpdateManyWithoutBathroomInput {
   create?: Maybe<
-    | ReviewCreateWithoutBathroomParentInput[]
-    | ReviewCreateWithoutBathroomParentInput
+    ReviewCreateWithoutBathroomInput[] | ReviewCreateWithoutBathroomInput
   >;
   delete?: Maybe<ReviewWhereUniqueInput[] | ReviewWhereUniqueInput>;
   connect?: Maybe<ReviewWhereUniqueInput[] | ReviewWhereUniqueInput>;
   set?: Maybe<ReviewWhereUniqueInput[] | ReviewWhereUniqueInput>;
   disconnect?: Maybe<ReviewWhereUniqueInput[] | ReviewWhereUniqueInput>;
   update?: Maybe<
-    | ReviewUpdateWithWhereUniqueWithoutBathroomParentInput[]
-    | ReviewUpdateWithWhereUniqueWithoutBathroomParentInput
+    | ReviewUpdateWithWhereUniqueWithoutBathroomInput[]
+    | ReviewUpdateWithWhereUniqueWithoutBathroomInput
   >;
   upsert?: Maybe<
-    | ReviewUpsertWithWhereUniqueWithoutBathroomParentInput[]
-    | ReviewUpsertWithWhereUniqueWithoutBathroomParentInput
+    | ReviewUpsertWithWhereUniqueWithoutBathroomInput[]
+    | ReviewUpsertWithWhereUniqueWithoutBathroomInput
   >;
   deleteMany?: Maybe<ReviewScalarWhereInput[] | ReviewScalarWhereInput>;
   updateMany?: Maybe<
@@ -801,23 +744,21 @@ export interface ReviewUpdateManyWithoutBathroomParentInput {
   >;
 }
 
-export interface ReviewUpdateWithWhereUniqueWithoutBathroomParentInput {
+export interface ReviewUpdateWithWhereUniqueWithoutBathroomInput {
   where: ReviewWhereUniqueInput;
-  data: ReviewUpdateWithoutBathroomParentDataInput;
+  data: ReviewUpdateWithoutBathroomDataInput;
 }
 
-export interface ReviewUpdateWithoutBathroomParentDataInput {
+export interface ReviewUpdateWithoutBathroomDataInput {
   title?: Maybe<String>;
   description?: Maybe<String>;
-  createdBy?: Maybe<UserUpdateOneWithoutReviewsInput>;
+  createdBy?: Maybe<UserUpdateOneRequiredWithoutReviewsInput>;
 }
 
-export interface UserUpdateOneWithoutReviewsInput {
+export interface UserUpdateOneRequiredWithoutReviewsInput {
   create?: Maybe<UserCreateWithoutReviewsInput>;
   update?: Maybe<UserUpdateWithoutReviewsDataInput>;
   upsert?: Maybe<UserUpsertWithoutReviewsInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
@@ -825,26 +766,24 @@ export interface UserUpdateWithoutReviewsDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
-  bathrooms?: Maybe<BathroomUpdateManyWithoutCreatedByInput>;
-  bookmark?: Maybe<BathroomUpdateManyWithoutBookmarkedByInput>;
+  bathrooms?: Maybe<BathroomUpdateManyWithoutPostedByInput>;
 }
 
-export interface BathroomUpdateManyWithoutBookmarkedByInput {
+export interface BathroomUpdateManyWithoutPostedByInput {
   create?: Maybe<
-    | BathroomCreateWithoutBookmarkedByInput[]
-    | BathroomCreateWithoutBookmarkedByInput
+    BathroomCreateWithoutPostedByInput[] | BathroomCreateWithoutPostedByInput
   >;
   delete?: Maybe<BathroomWhereUniqueInput[] | BathroomWhereUniqueInput>;
   connect?: Maybe<BathroomWhereUniqueInput[] | BathroomWhereUniqueInput>;
   set?: Maybe<BathroomWhereUniqueInput[] | BathroomWhereUniqueInput>;
   disconnect?: Maybe<BathroomWhereUniqueInput[] | BathroomWhereUniqueInput>;
   update?: Maybe<
-    | BathroomUpdateWithWhereUniqueWithoutBookmarkedByInput[]
-    | BathroomUpdateWithWhereUniqueWithoutBookmarkedByInput
+    | BathroomUpdateWithWhereUniqueWithoutPostedByInput[]
+    | BathroomUpdateWithWhereUniqueWithoutPostedByInput
   >;
   upsert?: Maybe<
-    | BathroomUpsertWithWhereUniqueWithoutBookmarkedByInput[]
-    | BathroomUpsertWithWhereUniqueWithoutBookmarkedByInput
+    | BathroomUpsertWithWhereUniqueWithoutPostedByInput[]
+    | BathroomUpsertWithWhereUniqueWithoutPostedByInput
   >;
   deleteMany?: Maybe<BathroomScalarWhereInput[] | BathroomScalarWhereInput>;
   updateMany?: Maybe<
@@ -853,12 +792,12 @@ export interface BathroomUpdateManyWithoutBookmarkedByInput {
   >;
 }
 
-export interface BathroomUpdateWithWhereUniqueWithoutBookmarkedByInput {
+export interface BathroomUpdateWithWhereUniqueWithoutPostedByInput {
   where: BathroomWhereUniqueInput;
-  data: BathroomUpdateWithoutBookmarkedByDataInput;
+  data: BathroomUpdateWithoutPostedByDataInput;
 }
 
-export interface BathroomUpdateWithoutBookmarkedByDataInput {
+export interface BathroomUpdateWithoutPostedByDataInput {
   businessName?: Maybe<String>;
   description?: Maybe<String>;
   address?: Maybe<String>;
@@ -868,14 +807,13 @@ export interface BathroomUpdateWithoutBookmarkedByDataInput {
   genderNeutral?: Maybe<Boolean>;
   accessibleStall?: Maybe<Boolean>;
   singleOccupancy?: Maybe<Boolean>;
-  createdBy?: Maybe<UserUpdateOneWithoutBathroomsInput>;
-  reviews?: Maybe<ReviewUpdateManyWithoutBathroomParentInput>;
+  reviews?: Maybe<ReviewUpdateManyWithoutBathroomInput>;
 }
 
-export interface BathroomUpsertWithWhereUniqueWithoutBookmarkedByInput {
+export interface BathroomUpsertWithWhereUniqueWithoutPostedByInput {
   where: BathroomWhereUniqueInput;
-  update: BathroomUpdateWithoutBookmarkedByDataInput;
-  create: BathroomCreateWithoutBookmarkedByInput;
+  update: BathroomUpdateWithoutPostedByDataInput;
+  create: BathroomCreateWithoutPostedByInput;
 }
 
 export interface BathroomScalarWhereInput {
@@ -994,169 +932,10 @@ export interface UserUpsertWithoutReviewsInput {
   create: UserCreateWithoutReviewsInput;
 }
 
-export interface ReviewUpsertWithWhereUniqueWithoutBathroomParentInput {
+export interface ReviewUpsertWithWhereUniqueWithoutBathroomInput {
   where: ReviewWhereUniqueInput;
-  update: ReviewUpdateWithoutBathroomParentDataInput;
-  create: ReviewCreateWithoutBathroomParentInput;
-}
-
-export interface ReviewScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  title?: Maybe<String>;
-  title_not?: Maybe<String>;
-  title_in?: Maybe<String[] | String>;
-  title_not_in?: Maybe<String[] | String>;
-  title_lt?: Maybe<String>;
-  title_lte?: Maybe<String>;
-  title_gt?: Maybe<String>;
-  title_gte?: Maybe<String>;
-  title_contains?: Maybe<String>;
-  title_not_contains?: Maybe<String>;
-  title_starts_with?: Maybe<String>;
-  title_not_starts_with?: Maybe<String>;
-  title_ends_with?: Maybe<String>;
-  title_not_ends_with?: Maybe<String>;
-  description?: Maybe<String>;
-  description_not?: Maybe<String>;
-  description_in?: Maybe<String[] | String>;
-  description_not_in?: Maybe<String[] | String>;
-  description_lt?: Maybe<String>;
-  description_lte?: Maybe<String>;
-  description_gt?: Maybe<String>;
-  description_gte?: Maybe<String>;
-  description_contains?: Maybe<String>;
-  description_not_contains?: Maybe<String>;
-  description_starts_with?: Maybe<String>;
-  description_not_starts_with?: Maybe<String>;
-  description_ends_with?: Maybe<String>;
-  description_not_ends_with?: Maybe<String>;
-  AND?: Maybe<ReviewScalarWhereInput[] | ReviewScalarWhereInput>;
-  OR?: Maybe<ReviewScalarWhereInput[] | ReviewScalarWhereInput>;
-  NOT?: Maybe<ReviewScalarWhereInput[] | ReviewScalarWhereInput>;
-}
-
-export interface ReviewUpdateManyWithWhereNestedInput {
-  where: ReviewScalarWhereInput;
-  data: ReviewUpdateManyDataInput;
-}
-
-export interface ReviewUpdateManyDataInput {
-  title?: Maybe<String>;
-  description?: Maybe<String>;
-}
-
-export interface BathroomUpsertWithWhereUniqueWithoutCreatedByInput {
-  where: BathroomWhereUniqueInput;
-  update: BathroomUpdateWithoutCreatedByDataInput;
-  create: BathroomCreateWithoutCreatedByInput;
-}
-
-export interface UserUpsertWithWhereUniqueWithoutBookmarkInput {
-  where: UserWhereUniqueInput;
-  update: UserUpdateWithoutBookmarkDataInput;
-  create: UserCreateWithoutBookmarkInput;
-}
-
-export interface UserScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  email?: Maybe<String>;
-  email_not?: Maybe<String>;
-  email_in?: Maybe<String[] | String>;
-  email_not_in?: Maybe<String[] | String>;
-  email_lt?: Maybe<String>;
-  email_lte?: Maybe<String>;
-  email_gt?: Maybe<String>;
-  email_gte?: Maybe<String>;
-  email_contains?: Maybe<String>;
-  email_not_contains?: Maybe<String>;
-  email_starts_with?: Maybe<String>;
-  email_not_starts_with?: Maybe<String>;
-  email_ends_with?: Maybe<String>;
-  email_not_ends_with?: Maybe<String>;
-  password?: Maybe<String>;
-  password_not?: Maybe<String>;
-  password_in?: Maybe<String[] | String>;
-  password_not_in?: Maybe<String[] | String>;
-  password_lt?: Maybe<String>;
-  password_lte?: Maybe<String>;
-  password_gt?: Maybe<String>;
-  password_gte?: Maybe<String>;
-  password_contains?: Maybe<String>;
-  password_not_contains?: Maybe<String>;
-  password_starts_with?: Maybe<String>;
-  password_not_starts_with?: Maybe<String>;
-  password_ends_with?: Maybe<String>;
-  password_not_ends_with?: Maybe<String>;
-  AND?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
-  OR?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
-  NOT?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
-}
-
-export interface UserUpdateManyWithWhereNestedInput {
-  where: UserScalarWhereInput;
-  data: UserUpdateManyDataInput;
-}
-
-export interface UserUpdateManyDataInput {
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-}
-
-export interface BathroomUpsertWithoutReviewsInput {
-  update: BathroomUpdateWithoutReviewsDataInput;
-  create: BathroomCreateWithoutReviewsInput;
-}
-
-export interface ReviewUpsertWithWhereUniqueWithoutCreatedByInput {
-  where: ReviewWhereUniqueInput;
-  update: ReviewUpdateWithoutCreatedByDataInput;
-  create: ReviewCreateWithoutCreatedByInput;
-}
-
-export interface UserUpsertWithoutBathroomsInput {
-  update: UserUpdateWithoutBathroomsDataInput;
-  create: UserCreateWithoutBathroomsInput;
+  update: ReviewUpdateWithoutBathroomDataInput;
+  create: ReviewCreateWithoutBathroomInput;
 }
 
 export interface BathroomUpdateManyMutationInput {
@@ -1175,15 +954,15 @@ export interface ReviewCreateInput {
   id?: Maybe<ID_Input>;
   title: String;
   description: String;
-  createdBy?: Maybe<UserCreateOneWithoutReviewsInput>;
-  bathroomParent?: Maybe<BathroomCreateOneWithoutReviewsInput>;
+  createdBy: UserCreateOneWithoutReviewsInput;
+  bathroom?: Maybe<BathroomCreateOneWithoutReviewsInput>;
 }
 
 export interface ReviewUpdateInput {
   title?: Maybe<String>;
   description?: Maybe<String>;
-  createdBy?: Maybe<UserUpdateOneWithoutReviewsInput>;
-  bathroomParent?: Maybe<BathroomUpdateOneWithoutReviewsInput>;
+  createdBy?: Maybe<UserUpdateOneRequiredWithoutReviewsInput>;
+  bathroom?: Maybe<BathroomUpdateOneWithoutReviewsInput>;
 }
 
 export interface ReviewUpdateManyMutationInput {
@@ -1196,18 +975,16 @@ export interface UserCreateInput {
   name: String;
   email: String;
   password: String;
-  bathrooms?: Maybe<BathroomCreateManyWithoutCreatedByInput>;
+  bathrooms?: Maybe<BathroomCreateManyWithoutPostedByInput>;
   reviews?: Maybe<ReviewCreateManyWithoutCreatedByInput>;
-  bookmark?: Maybe<BathroomCreateManyWithoutBookmarkedByInput>;
 }
 
 export interface UserUpdateInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
-  bathrooms?: Maybe<BathroomUpdateManyWithoutCreatedByInput>;
+  bathrooms?: Maybe<BathroomUpdateManyWithoutPostedByInput>;
   reviews?: Maybe<ReviewUpdateManyWithoutCreatedByInput>;
-  bookmark?: Maybe<BathroomUpdateManyWithoutBookmarkedByInput>;
 }
 
 export interface UserUpdateManyMutationInput {
@@ -1283,16 +1060,7 @@ export interface BathroomPromise extends Promise<Bathroom>, Fragmentable {
   genderNeutral: () => Promise<Boolean>;
   accessibleStall: () => Promise<Boolean>;
   singleOccupancy: () => Promise<Boolean>;
-  createdBy: <T = UserPromise>() => T;
-  bookmarkedBy: <T = FragmentableArray<User>>(args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  postedBy: <T = UserPromise>() => T;
   reviews: <T = FragmentableArray<Review>>(args?: {
     where?: ReviewWhereInput;
     orderBy?: ReviewOrderByInput;
@@ -1318,16 +1086,7 @@ export interface BathroomSubscription
   genderNeutral: () => Promise<AsyncIterator<Boolean>>;
   accessibleStall: () => Promise<AsyncIterator<Boolean>>;
   singleOccupancy: () => Promise<AsyncIterator<Boolean>>;
-  createdBy: <T = UserSubscription>() => T;
-  bookmarkedBy: <T = Promise<AsyncIterator<UserSubscription>>>(args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  postedBy: <T = UserSubscription>() => T;
   reviews: <T = Promise<AsyncIterator<ReviewSubscription>>>(args?: {
     where?: ReviewWhereInput;
     orderBy?: ReviewOrderByInput;
@@ -1353,16 +1112,7 @@ export interface BathroomNullablePromise
   genderNeutral: () => Promise<Boolean>;
   accessibleStall: () => Promise<Boolean>;
   singleOccupancy: () => Promise<Boolean>;
-  createdBy: <T = UserPromise>() => T;
-  bookmarkedBy: <T = FragmentableArray<User>>(args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  postedBy: <T = UserPromise>() => T;
   reviews: <T = FragmentableArray<Review>>(args?: {
     where?: ReviewWhereInput;
     orderBy?: ReviewOrderByInput;
@@ -1404,15 +1154,6 @@ export interface UserPromise extends Promise<User>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
-  bookmark: <T = FragmentableArray<Bathroom>>(args?: {
-    where?: BathroomWhereInput;
-    orderBy?: BathroomOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
 }
 
 export interface UserSubscription
@@ -1434,15 +1175,6 @@ export interface UserSubscription
   reviews: <T = Promise<AsyncIterator<ReviewSubscription>>>(args?: {
     where?: ReviewWhereInput;
     orderBy?: ReviewOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  bookmark: <T = Promise<AsyncIterator<BathroomSubscription>>>(args?: {
-    where?: BathroomWhereInput;
-    orderBy?: BathroomOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -1476,15 +1208,6 @@ export interface UserNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
-  bookmark: <T = FragmentableArray<Bathroom>>(args?: {
-    where?: BathroomWhereInput;
-    orderBy?: BathroomOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
 }
 
 export interface Review {
@@ -1498,7 +1221,7 @@ export interface ReviewPromise extends Promise<Review>, Fragmentable {
   title: () => Promise<String>;
   description: () => Promise<String>;
   createdBy: <T = UserPromise>() => T;
-  bathroomParent: <T = BathroomPromise>() => T;
+  bathroom: <T = BathroomPromise>() => T;
 }
 
 export interface ReviewSubscription
@@ -1508,7 +1231,7 @@ export interface ReviewSubscription
   title: () => Promise<AsyncIterator<String>>;
   description: () => Promise<AsyncIterator<String>>;
   createdBy: <T = UserSubscription>() => T;
-  bathroomParent: <T = BathroomSubscription>() => T;
+  bathroom: <T = BathroomSubscription>() => T;
 }
 
 export interface ReviewNullablePromise
@@ -1518,7 +1241,7 @@ export interface ReviewNullablePromise
   title: () => Promise<String>;
   description: () => Promise<String>;
   createdBy: <T = UserPromise>() => T;
-  bathroomParent: <T = BathroomPromise>() => T;
+  bathroom: <T = BathroomPromise>() => T;
 }
 
 export interface BathroomConnection {

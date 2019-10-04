@@ -1,5 +1,35 @@
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const { APP_SECRET, getUserId } = require('../utils');
+
+async function signup(parent, args, context, info) {
+    const password = await bcrypt.hash(args.password, 10);
+    const user = await context.prisma.createUser({ ...args, password });
+    const token = jwt.sign({ userId: user.id }, APP_SECRET);
+
+    return {
+        token,
+        user,
+    };
+}
+
+async function login(parent, args, context, info) {
+    const user = await context.prisma.user({ email: args.email });
+    if(!user) throw new Error('No such user found!');
+
+    const valid = await bcrypt.compare(args.password, user.password);
+    if(!valid) throw new Error('Wrong Password!');
+
+    const token = jwt.sign({ userId: user.id}, APP_SECRET);
+    
+    return {
+        token,
+        userm
+    }
+}
 
 async function postBathroom(parent, args, context, info) {
+    const userId = getUserId(context);
     return context.prisma.createBathroom({
         businessName: args.businessName,
         description: args.description,
@@ -9,14 +39,18 @@ async function postBathroom(parent, args, context, info) {
         purchaseRequired: args.purchaseRequired,
         genderNeutral: args.genderNeutral,
         accessibleStall: args.accessibleStall,
-        singleOccupancy: args.singleOccupancy
+        singleOccupancy: args.singleOccupancy,
+        postedBy: { connect: { id: userId } },
     })
 };
 
 async function postReview(parent, args, context, info) {
+    const userId = getUserId(context);
     return context.prisma.createReview({
         title: args.title,
         description: args.description,
+        createdBy: { connect: { id: userId } },
+        bathroom: { connect: { id: args.bathroomId } },
     })
 };
 
@@ -62,4 +96,6 @@ module.exports = {
     updateReview,
     deleteBathroom,
     deleteReview,
+    signup,
+    login,
 };

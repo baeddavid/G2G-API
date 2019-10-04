@@ -1,9 +1,17 @@
 const { GraphQLServer } = require('graphql-yoga');
 const { prisma } = require('./generated/prisma-client');
 const Mutation = require('./resolvers/Mutation');
+const Query = require('./resolvers/Query');
+const User = require('./resolvers/User');
+const Bathroom = require('./resolvers/Bathroom');
+const Review = require('./resolvers/Review');
 
 const resolvers = {
     Mutation,
+    Query,
+    User,
+    Bathroom,
+    Review,
 };
 
 const server = new GraphQLServer({

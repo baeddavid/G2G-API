@@ -3,6 +3,10 @@ type Query {
 }
 
 type Mutation {
+    signup(email: String!, password: String!, name: String!): AuthPayload
+
+    login(email: String!, password: String!): AuthPayload
+
     postBathroom(
         businessName: String,
         description: String!,
@@ -16,6 +20,7 @@ type Mutation {
     ): Bathroom!
 
     postReview(
+        bathroomId: ID!,
         title: String!,
         description: String!,
     ): Review!
@@ -59,27 +64,29 @@ type Bathroom {
     genderNeutral: Boolean!
     accessibleStall: Boolean!
     singleOccupancy: Boolean!
-    createdBy: User
-    bookmarkedBy: [User!]!
     reviews: [Review!]!
+    postedBy: User
 }
 
 type Review {
     id: ID!
     title: String!
     description: String!
-    createdBy: User
-    bathroomParent: Bathroom
+    createdBy: User!
+    bathroom: Bathroom
 }
 
 type User {
     id: ID!
     name: String!
     email: String!
-    password: String!
     bathrooms: [Bathroom!]!
     reviews: [Review!]!
-    bookmark: [Bathroom!]!
+}
+
+type AuthPayload {
+    token: String
+    user: User
 }
 
 type Feed {

@@ -31,8 +31,7 @@ type Bathroom {
   genderNeutral: Boolean!
   accessibleStall: Boolean!
   singleOccupancy: Boolean!
-  createdBy: User
-  bookmarkedBy(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  postedBy: User
   reviews(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Review!]
 }
 
@@ -53,18 +52,12 @@ input BathroomCreateInput {
   genderNeutral: Boolean
   accessibleStall: Boolean
   singleOccupancy: Boolean
-  createdBy: UserCreateOneWithoutBathroomsInput
-  bookmarkedBy: UserCreateManyWithoutBookmarkInput
-  reviews: ReviewCreateManyWithoutBathroomParentInput
+  postedBy: UserCreateOneWithoutBathroomsInput
+  reviews: ReviewCreateManyWithoutBathroomInput
 }
 
-input BathroomCreateManyWithoutBookmarkedByInput {
-  create: [BathroomCreateWithoutBookmarkedByInput!]
-  connect: [BathroomWhereUniqueInput!]
-}
-
-input BathroomCreateManyWithoutCreatedByInput {
-  create: [BathroomCreateWithoutCreatedByInput!]
+input BathroomCreateManyWithoutPostedByInput {
+  create: [BathroomCreateWithoutPostedByInput!]
   connect: [BathroomWhereUniqueInput!]
 }
 
@@ -73,7 +66,7 @@ input BathroomCreateOneWithoutReviewsInput {
   connect: BathroomWhereUniqueInput
 }
 
-input BathroomCreateWithoutBookmarkedByInput {
+input BathroomCreateWithoutPostedByInput {
   id: ID
   businessName: String
   description: String!
@@ -84,23 +77,7 @@ input BathroomCreateWithoutBookmarkedByInput {
   genderNeutral: Boolean
   accessibleStall: Boolean
   singleOccupancy: Boolean
-  createdBy: UserCreateOneWithoutBathroomsInput
-  reviews: ReviewCreateManyWithoutBathroomParentInput
-}
-
-input BathroomCreateWithoutCreatedByInput {
-  id: ID
-  businessName: String
-  description: String!
-  address: String!
-  lat: Float!
-  lng: Float!
-  purchaseRequired: Boolean
-  genderNeutral: Boolean
-  accessibleStall: Boolean
-  singleOccupancy: Boolean
-  bookmarkedBy: UserCreateManyWithoutBookmarkInput
-  reviews: ReviewCreateManyWithoutBathroomParentInput
+  reviews: ReviewCreateManyWithoutBathroomInput
 }
 
 input BathroomCreateWithoutReviewsInput {
@@ -114,8 +91,7 @@ input BathroomCreateWithoutReviewsInput {
   genderNeutral: Boolean
   accessibleStall: Boolean
   singleOccupancy: Boolean
-  createdBy: UserCreateOneWithoutBathroomsInput
-  bookmarkedBy: UserCreateManyWithoutBookmarkInput
+  postedBy: UserCreateOneWithoutBathroomsInput
 }
 
 type BathroomEdge {
@@ -284,9 +260,8 @@ input BathroomUpdateInput {
   genderNeutral: Boolean
   accessibleStall: Boolean
   singleOccupancy: Boolean
-  createdBy: UserUpdateOneWithoutBathroomsInput
-  bookmarkedBy: UserUpdateManyWithoutBookmarkInput
-  reviews: ReviewUpdateManyWithoutBathroomParentInput
+  postedBy: UserUpdateOneWithoutBathroomsInput
+  reviews: ReviewUpdateManyWithoutBathroomInput
 }
 
 input BathroomUpdateManyDataInput {
@@ -313,26 +288,14 @@ input BathroomUpdateManyMutationInput {
   singleOccupancy: Boolean
 }
 
-input BathroomUpdateManyWithoutBookmarkedByInput {
-  create: [BathroomCreateWithoutBookmarkedByInput!]
+input BathroomUpdateManyWithoutPostedByInput {
+  create: [BathroomCreateWithoutPostedByInput!]
   delete: [BathroomWhereUniqueInput!]
   connect: [BathroomWhereUniqueInput!]
   set: [BathroomWhereUniqueInput!]
   disconnect: [BathroomWhereUniqueInput!]
-  update: [BathroomUpdateWithWhereUniqueWithoutBookmarkedByInput!]
-  upsert: [BathroomUpsertWithWhereUniqueWithoutBookmarkedByInput!]
-  deleteMany: [BathroomScalarWhereInput!]
-  updateMany: [BathroomUpdateManyWithWhereNestedInput!]
-}
-
-input BathroomUpdateManyWithoutCreatedByInput {
-  create: [BathroomCreateWithoutCreatedByInput!]
-  delete: [BathroomWhereUniqueInput!]
-  connect: [BathroomWhereUniqueInput!]
-  set: [BathroomWhereUniqueInput!]
-  disconnect: [BathroomWhereUniqueInput!]
-  update: [BathroomUpdateWithWhereUniqueWithoutCreatedByInput!]
-  upsert: [BathroomUpsertWithWhereUniqueWithoutCreatedByInput!]
+  update: [BathroomUpdateWithWhereUniqueWithoutPostedByInput!]
+  upsert: [BathroomUpsertWithWhereUniqueWithoutPostedByInput!]
   deleteMany: [BathroomScalarWhereInput!]
   updateMany: [BathroomUpdateManyWithWhereNestedInput!]
 }
@@ -351,7 +314,7 @@ input BathroomUpdateOneWithoutReviewsInput {
   connect: BathroomWhereUniqueInput
 }
 
-input BathroomUpdateWithoutBookmarkedByDataInput {
+input BathroomUpdateWithoutPostedByDataInput {
   businessName: String
   description: String
   address: String
@@ -361,22 +324,7 @@ input BathroomUpdateWithoutBookmarkedByDataInput {
   genderNeutral: Boolean
   accessibleStall: Boolean
   singleOccupancy: Boolean
-  createdBy: UserUpdateOneWithoutBathroomsInput
-  reviews: ReviewUpdateManyWithoutBathroomParentInput
-}
-
-input BathroomUpdateWithoutCreatedByDataInput {
-  businessName: String
-  description: String
-  address: String
-  lat: Float
-  lng: Float
-  purchaseRequired: Boolean
-  genderNeutral: Boolean
-  accessibleStall: Boolean
-  singleOccupancy: Boolean
-  bookmarkedBy: UserUpdateManyWithoutBookmarkInput
-  reviews: ReviewUpdateManyWithoutBathroomParentInput
+  reviews: ReviewUpdateManyWithoutBathroomInput
 }
 
 input BathroomUpdateWithoutReviewsDataInput {
@@ -389,18 +337,12 @@ input BathroomUpdateWithoutReviewsDataInput {
   genderNeutral: Boolean
   accessibleStall: Boolean
   singleOccupancy: Boolean
-  createdBy: UserUpdateOneWithoutBathroomsInput
-  bookmarkedBy: UserUpdateManyWithoutBookmarkInput
+  postedBy: UserUpdateOneWithoutBathroomsInput
 }
 
-input BathroomUpdateWithWhereUniqueWithoutBookmarkedByInput {
+input BathroomUpdateWithWhereUniqueWithoutPostedByInput {
   where: BathroomWhereUniqueInput!
-  data: BathroomUpdateWithoutBookmarkedByDataInput!
-}
-
-input BathroomUpdateWithWhereUniqueWithoutCreatedByInput {
-  where: BathroomWhereUniqueInput!
-  data: BathroomUpdateWithoutCreatedByDataInput!
+  data: BathroomUpdateWithoutPostedByDataInput!
 }
 
 input BathroomUpsertWithoutReviewsInput {
@@ -408,16 +350,10 @@ input BathroomUpsertWithoutReviewsInput {
   create: BathroomCreateWithoutReviewsInput!
 }
 
-input BathroomUpsertWithWhereUniqueWithoutBookmarkedByInput {
+input BathroomUpsertWithWhereUniqueWithoutPostedByInput {
   where: BathroomWhereUniqueInput!
-  update: BathroomUpdateWithoutBookmarkedByDataInput!
-  create: BathroomCreateWithoutBookmarkedByInput!
-}
-
-input BathroomUpsertWithWhereUniqueWithoutCreatedByInput {
-  where: BathroomWhereUniqueInput!
-  update: BathroomUpdateWithoutCreatedByDataInput!
-  create: BathroomCreateWithoutCreatedByInput!
+  update: BathroomUpdateWithoutPostedByDataInput!
+  create: BathroomCreateWithoutPostedByInput!
 }
 
 input BathroomWhereInput {
@@ -509,10 +445,7 @@ input BathroomWhereInput {
   accessibleStall_not: Boolean
   singleOccupancy: Boolean
   singleOccupancy_not: Boolean
-  createdBy: UserWhereInput
-  bookmarkedBy_every: UserWhereInput
-  bookmarkedBy_some: UserWhereInput
-  bookmarkedBy_none: UserWhereInput
+  postedBy: UserWhereInput
   reviews_every: ReviewWhereInput
   reviews_some: ReviewWhereInput
   reviews_none: ReviewWhereInput
@@ -584,8 +517,8 @@ type Review {
   id: ID!
   title: String!
   description: String!
-  createdBy: User
-  bathroomParent: Bathroom
+  createdBy: User!
+  bathroom: Bathroom
 }
 
 type ReviewConnection {
@@ -598,12 +531,12 @@ input ReviewCreateInput {
   id: ID
   title: String!
   description: String!
-  createdBy: UserCreateOneWithoutReviewsInput
-  bathroomParent: BathroomCreateOneWithoutReviewsInput
+  createdBy: UserCreateOneWithoutReviewsInput!
+  bathroom: BathroomCreateOneWithoutReviewsInput
 }
 
-input ReviewCreateManyWithoutBathroomParentInput {
-  create: [ReviewCreateWithoutBathroomParentInput!]
+input ReviewCreateManyWithoutBathroomInput {
+  create: [ReviewCreateWithoutBathroomInput!]
   connect: [ReviewWhereUniqueInput!]
 }
 
@@ -612,18 +545,18 @@ input ReviewCreateManyWithoutCreatedByInput {
   connect: [ReviewWhereUniqueInput!]
 }
 
-input ReviewCreateWithoutBathroomParentInput {
+input ReviewCreateWithoutBathroomInput {
   id: ID
   title: String!
   description: String!
-  createdBy: UserCreateOneWithoutReviewsInput
+  createdBy: UserCreateOneWithoutReviewsInput!
 }
 
 input ReviewCreateWithoutCreatedByInput {
   id: ID
   title: String!
   description: String!
-  bathroomParent: BathroomCreateOneWithoutReviewsInput
+  bathroom: BathroomCreateOneWithoutReviewsInput
 }
 
 type ReviewEdge {
@@ -715,8 +648,8 @@ input ReviewSubscriptionWhereInput {
 input ReviewUpdateInput {
   title: String
   description: String
-  createdBy: UserUpdateOneWithoutReviewsInput
-  bathroomParent: BathroomUpdateOneWithoutReviewsInput
+  createdBy: UserUpdateOneRequiredWithoutReviewsInput
+  bathroom: BathroomUpdateOneWithoutReviewsInput
 }
 
 input ReviewUpdateManyDataInput {
@@ -729,14 +662,14 @@ input ReviewUpdateManyMutationInput {
   description: String
 }
 
-input ReviewUpdateManyWithoutBathroomParentInput {
-  create: [ReviewCreateWithoutBathroomParentInput!]
+input ReviewUpdateManyWithoutBathroomInput {
+  create: [ReviewCreateWithoutBathroomInput!]
   delete: [ReviewWhereUniqueInput!]
   connect: [ReviewWhereUniqueInput!]
   set: [ReviewWhereUniqueInput!]
   disconnect: [ReviewWhereUniqueInput!]
-  update: [ReviewUpdateWithWhereUniqueWithoutBathroomParentInput!]
-  upsert: [ReviewUpsertWithWhereUniqueWithoutBathroomParentInput!]
+  update: [ReviewUpdateWithWhereUniqueWithoutBathroomInput!]
+  upsert: [ReviewUpsertWithWhereUniqueWithoutBathroomInput!]
   deleteMany: [ReviewScalarWhereInput!]
   updateMany: [ReviewUpdateManyWithWhereNestedInput!]
 }
@@ -758,21 +691,21 @@ input ReviewUpdateManyWithWhereNestedInput {
   data: ReviewUpdateManyDataInput!
 }
 
-input ReviewUpdateWithoutBathroomParentDataInput {
+input ReviewUpdateWithoutBathroomDataInput {
   title: String
   description: String
-  createdBy: UserUpdateOneWithoutReviewsInput
+  createdBy: UserUpdateOneRequiredWithoutReviewsInput
 }
 
 input ReviewUpdateWithoutCreatedByDataInput {
   title: String
   description: String
-  bathroomParent: BathroomUpdateOneWithoutReviewsInput
+  bathroom: BathroomUpdateOneWithoutReviewsInput
 }
 
-input ReviewUpdateWithWhereUniqueWithoutBathroomParentInput {
+input ReviewUpdateWithWhereUniqueWithoutBathroomInput {
   where: ReviewWhereUniqueInput!
-  data: ReviewUpdateWithoutBathroomParentDataInput!
+  data: ReviewUpdateWithoutBathroomDataInput!
 }
 
 input ReviewUpdateWithWhereUniqueWithoutCreatedByInput {
@@ -780,10 +713,10 @@ input ReviewUpdateWithWhereUniqueWithoutCreatedByInput {
   data: ReviewUpdateWithoutCreatedByDataInput!
 }
 
-input ReviewUpsertWithWhereUniqueWithoutBathroomParentInput {
+input ReviewUpsertWithWhereUniqueWithoutBathroomInput {
   where: ReviewWhereUniqueInput!
-  update: ReviewUpdateWithoutBathroomParentDataInput!
-  create: ReviewCreateWithoutBathroomParentInput!
+  update: ReviewUpdateWithoutBathroomDataInput!
+  create: ReviewCreateWithoutBathroomInput!
 }
 
 input ReviewUpsertWithWhereUniqueWithoutCreatedByInput {
@@ -836,7 +769,7 @@ input ReviewWhereInput {
   description_ends_with: String
   description_not_ends_with: String
   createdBy: UserWhereInput
-  bathroomParent: BathroomWhereInput
+  bathroom: BathroomWhereInput
   AND: [ReviewWhereInput!]
   OR: [ReviewWhereInput!]
   NOT: [ReviewWhereInput!]
@@ -859,7 +792,6 @@ type User {
   password: String!
   bathrooms(where: BathroomWhereInput, orderBy: BathroomOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Bathroom!]
   reviews(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Review!]
-  bookmark(where: BathroomWhereInput, orderBy: BathroomOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Bathroom!]
 }
 
 type UserConnection {
@@ -873,14 +805,8 @@ input UserCreateInput {
   name: String!
   email: String!
   password: String!
-  bathrooms: BathroomCreateManyWithoutCreatedByInput
+  bathrooms: BathroomCreateManyWithoutPostedByInput
   reviews: ReviewCreateManyWithoutCreatedByInput
-  bookmark: BathroomCreateManyWithoutBookmarkedByInput
-}
-
-input UserCreateManyWithoutBookmarkInput {
-  create: [UserCreateWithoutBookmarkInput!]
-  connect: [UserWhereUniqueInput!]
 }
 
 input UserCreateOneWithoutBathroomsInput {
@@ -899,16 +825,6 @@ input UserCreateWithoutBathroomsInput {
   email: String!
   password: String!
   reviews: ReviewCreateManyWithoutCreatedByInput
-  bookmark: BathroomCreateManyWithoutBookmarkedByInput
-}
-
-input UserCreateWithoutBookmarkInput {
-  id: ID
-  name: String!
-  email: String!
-  password: String!
-  bathrooms: BathroomCreateManyWithoutCreatedByInput
-  reviews: ReviewCreateManyWithoutCreatedByInput
 }
 
 input UserCreateWithoutReviewsInput {
@@ -916,8 +832,7 @@ input UserCreateWithoutReviewsInput {
   name: String!
   email: String!
   password: String!
-  bathrooms: BathroomCreateManyWithoutCreatedByInput
-  bookmark: BathroomCreateManyWithoutBookmarkedByInput
+  bathrooms: BathroomCreateManyWithoutPostedByInput
 }
 
 type UserEdge {
@@ -943,68 +858,6 @@ type UserPreviousValues {
   password: String!
 }
 
-input UserScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  email: String
-  email_not: String
-  email_in: [String!]
-  email_not_in: [String!]
-  email_lt: String
-  email_lte: String
-  email_gt: String
-  email_gte: String
-  email_contains: String
-  email_not_contains: String
-  email_starts_with: String
-  email_not_starts_with: String
-  email_ends_with: String
-  email_not_ends_with: String
-  password: String
-  password_not: String
-  password_in: [String!]
-  password_not_in: [String!]
-  password_lt: String
-  password_lte: String
-  password_gt: String
-  password_gte: String
-  password_contains: String
-  password_not_contains: String
-  password_starts_with: String
-  password_not_starts_with: String
-  password_ends_with: String
-  password_not_ends_with: String
-  AND: [UserScalarWhereInput!]
-  OR: [UserScalarWhereInput!]
-  NOT: [UserScalarWhereInput!]
-}
-
 type UserSubscriptionPayload {
   mutation: MutationType!
   node: User
@@ -1027,15 +880,8 @@ input UserUpdateInput {
   name: String
   email: String
   password: String
-  bathrooms: BathroomUpdateManyWithoutCreatedByInput
+  bathrooms: BathroomUpdateManyWithoutPostedByInput
   reviews: ReviewUpdateManyWithoutCreatedByInput
-  bookmark: BathroomUpdateManyWithoutBookmarkedByInput
-}
-
-input UserUpdateManyDataInput {
-  name: String
-  email: String
-  password: String
 }
 
 input UserUpdateManyMutationInput {
@@ -1044,21 +890,11 @@ input UserUpdateManyMutationInput {
   password: String
 }
 
-input UserUpdateManyWithoutBookmarkInput {
-  create: [UserCreateWithoutBookmarkInput!]
-  delete: [UserWhereUniqueInput!]
-  connect: [UserWhereUniqueInput!]
-  set: [UserWhereUniqueInput!]
-  disconnect: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueWithoutBookmarkInput!]
-  upsert: [UserUpsertWithWhereUniqueWithoutBookmarkInput!]
-  deleteMany: [UserScalarWhereInput!]
-  updateMany: [UserUpdateManyWithWhereNestedInput!]
-}
-
-input UserUpdateManyWithWhereNestedInput {
-  where: UserScalarWhereInput!
-  data: UserUpdateManyDataInput!
+input UserUpdateOneRequiredWithoutReviewsInput {
+  create: UserCreateWithoutReviewsInput
+  update: UserUpdateWithoutReviewsDataInput
+  upsert: UserUpsertWithoutReviewsInput
+  connect: UserWhereUniqueInput
 }
 
 input UserUpdateOneWithoutBathroomsInput {
@@ -1070,28 +906,10 @@ input UserUpdateOneWithoutBathroomsInput {
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateOneWithoutReviewsInput {
-  create: UserCreateWithoutReviewsInput
-  update: UserUpdateWithoutReviewsDataInput
-  upsert: UserUpsertWithoutReviewsInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: UserWhereUniqueInput
-}
-
 input UserUpdateWithoutBathroomsDataInput {
   name: String
   email: String
   password: String
-  reviews: ReviewUpdateManyWithoutCreatedByInput
-  bookmark: BathroomUpdateManyWithoutBookmarkedByInput
-}
-
-input UserUpdateWithoutBookmarkDataInput {
-  name: String
-  email: String
-  password: String
-  bathrooms: BathroomUpdateManyWithoutCreatedByInput
   reviews: ReviewUpdateManyWithoutCreatedByInput
 }
 
@@ -1099,13 +917,7 @@ input UserUpdateWithoutReviewsDataInput {
   name: String
   email: String
   password: String
-  bathrooms: BathroomUpdateManyWithoutCreatedByInput
-  bookmark: BathroomUpdateManyWithoutBookmarkedByInput
-}
-
-input UserUpdateWithWhereUniqueWithoutBookmarkInput {
-  where: UserWhereUniqueInput!
-  data: UserUpdateWithoutBookmarkDataInput!
+  bathrooms: BathroomUpdateManyWithoutPostedByInput
 }
 
 input UserUpsertWithoutBathroomsInput {
@@ -1116,12 +928,6 @@ input UserUpsertWithoutBathroomsInput {
 input UserUpsertWithoutReviewsInput {
   update: UserUpdateWithoutReviewsDataInput!
   create: UserCreateWithoutReviewsInput!
-}
-
-input UserUpsertWithWhereUniqueWithoutBookmarkInput {
-  where: UserWhereUniqueInput!
-  update: UserUpdateWithoutBookmarkDataInput!
-  create: UserCreateWithoutBookmarkInput!
 }
 
 input UserWhereInput {
@@ -1187,9 +993,6 @@ input UserWhereInput {
   reviews_every: ReviewWhereInput
   reviews_some: ReviewWhereInput
   reviews_none: ReviewWhereInput
-  bookmark_every: BathroomWhereInput
-  bookmark_some: BathroomWhereInput
-  bookmark_none: BathroomWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
@@ -1197,6 +1000,7 @@ input UserWhereInput {
 
 input UserWhereUniqueInput {
   id: ID
+  email: String
 }
 `
       }
