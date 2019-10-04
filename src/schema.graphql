@@ -1,5 +1,6 @@
 type Query {
     feed(filter: String, skip: Int, first: Int): Feed!
+    getClosest(currentLat: Float!, currentLng: Float!): Feed!
 }
 
 type Mutation {
