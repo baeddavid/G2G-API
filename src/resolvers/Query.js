@@ -24,6 +24,7 @@ async function feed(parent, args, context, info) {
         count,
     };
 }
+
 async function getClosest(parent, args, context, info) {
     const where = {
         AND: [{
@@ -48,7 +49,19 @@ async function getClosest(parent, args, context, info) {
     };
 }
 
+async function getUser(parent, args, context, info) {
+    const User = await context.prisma.user( {id: args.userId} );
+    return User;
+}
+
+async function getBathroom(parent, args, context, info) {
+    const Bathroom = await context.prisma.bathroom( {id: args.bathroomId } );
+    return Bathroom;
+}
+
 module.exports = {
     feed,
     getClosest,
+    getBathroom,
+    getUser,
 }

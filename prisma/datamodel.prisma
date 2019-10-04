@@ -12,7 +12,7 @@
     singleOccupancy: Boolean! @default(value: false)
     postedBy: User @relation(name: "Creator")
     reviews: [Review!]!
-    bookmarkedBy: [Bookmark!]!
+    bookmarks: [Bookmark!]!
 }
 
 type Review {
@@ -25,8 +25,8 @@ type Review {
 
 type Bookmark  {
     id: ID! @id
-    bathroom: Bathroom!
     user: User!
+    bathroom: Bathroom!
 }
 
 type User {
@@ -36,5 +36,5 @@ type User {
     password: String!
     bathrooms: [Bathroom!]! @relation(name: "Creator")
     reviews: [Review!]!
-    bookmark: [Bookmark!]!
+    bookmarks: [Bookmark!]!
 }

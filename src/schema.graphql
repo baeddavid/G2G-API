@@ -1,6 +1,8 @@
 type Query {
     feed(filter: String, skip: Int, first: Int): Feed!
     getClosest(currentLat: Float!, currentLng: Float!): Feed!
+    getUser(userId: ID!): User!
+    getBathroom(bathroomId: ID!): Bathroom!
 }
 
 type Mutation {
@@ -86,6 +88,7 @@ type User {
     email: String!
     bathrooms: [Bathroom!]!
     reviews: [Review!]!
+    bookmarks: [Bookmark!]!
 }
 
 type AuthPayload {

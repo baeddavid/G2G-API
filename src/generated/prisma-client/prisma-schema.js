@@ -37,7 +37,7 @@ type Bathroom {
   singleOccupancy: Boolean!
   postedBy: User
   reviews(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Review!]
-  bookmarkedBy(where: BookmarkWhereInput, orderBy: BookmarkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Bookmark!]
+  bookmarks(where: BookmarkWhereInput, orderBy: BookmarkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Bookmark!]
 }
 
 type BathroomConnection {
@@ -59,7 +59,7 @@ input BathroomCreateInput {
   singleOccupancy: Boolean
   postedBy: UserCreateOneWithoutBathroomsInput
   reviews: ReviewCreateManyWithoutBathroomInput
-  bookmarkedBy: BookmarkCreateManyWithoutBathroomInput
+  bookmarks: BookmarkCreateManyWithoutBathroomInput
 }
 
 input BathroomCreateManyWithoutPostedByInput {
@@ -67,8 +67,8 @@ input BathroomCreateManyWithoutPostedByInput {
   connect: [BathroomWhereUniqueInput!]
 }
 
-input BathroomCreateOneWithoutBookmarkedByInput {
-  create: BathroomCreateWithoutBookmarkedByInput
+input BathroomCreateOneWithoutBookmarksInput {
+  create: BathroomCreateWithoutBookmarksInput
   connect: BathroomWhereUniqueInput
 }
 
@@ -77,7 +77,7 @@ input BathroomCreateOneWithoutReviewsInput {
   connect: BathroomWhereUniqueInput
 }
 
-input BathroomCreateWithoutBookmarkedByInput {
+input BathroomCreateWithoutBookmarksInput {
   id: ID
   businessName: String
   description: String!
@@ -104,7 +104,7 @@ input BathroomCreateWithoutPostedByInput {
   accessibleStall: Boolean
   singleOccupancy: Boolean
   reviews: ReviewCreateManyWithoutBathroomInput
-  bookmarkedBy: BookmarkCreateManyWithoutBathroomInput
+  bookmarks: BookmarkCreateManyWithoutBathroomInput
 }
 
 input BathroomCreateWithoutReviewsInput {
@@ -119,7 +119,7 @@ input BathroomCreateWithoutReviewsInput {
   accessibleStall: Boolean
   singleOccupancy: Boolean
   postedBy: UserCreateOneWithoutBathroomsInput
-  bookmarkedBy: BookmarkCreateManyWithoutBathroomInput
+  bookmarks: BookmarkCreateManyWithoutBathroomInput
 }
 
 type BathroomEdge {
@@ -290,7 +290,7 @@ input BathroomUpdateInput {
   singleOccupancy: Boolean
   postedBy: UserUpdateOneWithoutBathroomsInput
   reviews: ReviewUpdateManyWithoutBathroomInput
-  bookmarkedBy: BookmarkUpdateManyWithoutBathroomInput
+  bookmarks: BookmarkUpdateManyWithoutBathroomInput
 }
 
 input BathroomUpdateManyDataInput {
@@ -334,10 +334,10 @@ input BathroomUpdateManyWithWhereNestedInput {
   data: BathroomUpdateManyDataInput!
 }
 
-input BathroomUpdateOneRequiredWithoutBookmarkedByInput {
-  create: BathroomCreateWithoutBookmarkedByInput
-  update: BathroomUpdateWithoutBookmarkedByDataInput
-  upsert: BathroomUpsertWithoutBookmarkedByInput
+input BathroomUpdateOneRequiredWithoutBookmarksInput {
+  create: BathroomCreateWithoutBookmarksInput
+  update: BathroomUpdateWithoutBookmarksDataInput
+  upsert: BathroomUpsertWithoutBookmarksInput
   connect: BathroomWhereUniqueInput
 }
 
@@ -350,7 +350,7 @@ input BathroomUpdateOneWithoutReviewsInput {
   connect: BathroomWhereUniqueInput
 }
 
-input BathroomUpdateWithoutBookmarkedByDataInput {
+input BathroomUpdateWithoutBookmarksDataInput {
   businessName: String
   description: String
   address: String
@@ -375,7 +375,7 @@ input BathroomUpdateWithoutPostedByDataInput {
   accessibleStall: Boolean
   singleOccupancy: Boolean
   reviews: ReviewUpdateManyWithoutBathroomInput
-  bookmarkedBy: BookmarkUpdateManyWithoutBathroomInput
+  bookmarks: BookmarkUpdateManyWithoutBathroomInput
 }
 
 input BathroomUpdateWithoutReviewsDataInput {
@@ -389,7 +389,7 @@ input BathroomUpdateWithoutReviewsDataInput {
   accessibleStall: Boolean
   singleOccupancy: Boolean
   postedBy: UserUpdateOneWithoutBathroomsInput
-  bookmarkedBy: BookmarkUpdateManyWithoutBathroomInput
+  bookmarks: BookmarkUpdateManyWithoutBathroomInput
 }
 
 input BathroomUpdateWithWhereUniqueWithoutPostedByInput {
@@ -397,9 +397,9 @@ input BathroomUpdateWithWhereUniqueWithoutPostedByInput {
   data: BathroomUpdateWithoutPostedByDataInput!
 }
 
-input BathroomUpsertWithoutBookmarkedByInput {
-  update: BathroomUpdateWithoutBookmarkedByDataInput!
-  create: BathroomCreateWithoutBookmarkedByInput!
+input BathroomUpsertWithoutBookmarksInput {
+  update: BathroomUpdateWithoutBookmarksDataInput!
+  create: BathroomCreateWithoutBookmarksInput!
 }
 
 input BathroomUpsertWithoutReviewsInput {
@@ -506,9 +506,9 @@ input BathroomWhereInput {
   reviews_every: ReviewWhereInput
   reviews_some: ReviewWhereInput
   reviews_none: ReviewWhereInput
-  bookmarkedBy_every: BookmarkWhereInput
-  bookmarkedBy_some: BookmarkWhereInput
-  bookmarkedBy_none: BookmarkWhereInput
+  bookmarks_every: BookmarkWhereInput
+  bookmarks_some: BookmarkWhereInput
+  bookmarks_none: BookmarkWhereInput
   AND: [BathroomWhereInput!]
   OR: [BathroomWhereInput!]
   NOT: [BathroomWhereInput!]
@@ -520,8 +520,8 @@ input BathroomWhereUniqueInput {
 
 type Bookmark {
   id: ID!
-  bathroom: Bathroom!
   user: User!
+  bathroom: Bathroom!
 }
 
 type BookmarkConnection {
@@ -532,8 +532,8 @@ type BookmarkConnection {
 
 input BookmarkCreateInput {
   id: ID
-  bathroom: BathroomCreateOneWithoutBookmarkedByInput!
-  user: UserCreateOneWithoutBookmarkInput!
+  user: UserCreateOneWithoutBookmarksInput!
+  bathroom: BathroomCreateOneWithoutBookmarksInput!
 }
 
 input BookmarkCreateManyWithoutBathroomInput {
@@ -548,12 +548,12 @@ input BookmarkCreateManyWithoutUserInput {
 
 input BookmarkCreateWithoutBathroomInput {
   id: ID
-  user: UserCreateOneWithoutBookmarkInput!
+  user: UserCreateOneWithoutBookmarksInput!
 }
 
 input BookmarkCreateWithoutUserInput {
   id: ID
-  bathroom: BathroomCreateOneWithoutBookmarkedByInput!
+  bathroom: BathroomCreateOneWithoutBookmarksInput!
 }
 
 type BookmarkEdge {
@@ -609,8 +609,8 @@ input BookmarkSubscriptionWhereInput {
 }
 
 input BookmarkUpdateInput {
-  bathroom: BathroomUpdateOneRequiredWithoutBookmarkedByInput
-  user: UserUpdateOneRequiredWithoutBookmarkInput
+  user: UserUpdateOneRequiredWithoutBookmarksInput
+  bathroom: BathroomUpdateOneRequiredWithoutBookmarksInput
 }
 
 input BookmarkUpdateManyWithoutBathroomInput {
@@ -636,11 +636,11 @@ input BookmarkUpdateManyWithoutUserInput {
 }
 
 input BookmarkUpdateWithoutBathroomDataInput {
-  user: UserUpdateOneRequiredWithoutBookmarkInput
+  user: UserUpdateOneRequiredWithoutBookmarksInput
 }
 
 input BookmarkUpdateWithoutUserDataInput {
-  bathroom: BathroomUpdateOneRequiredWithoutBookmarkedByInput
+  bathroom: BathroomUpdateOneRequiredWithoutBookmarksInput
 }
 
 input BookmarkUpdateWithWhereUniqueWithoutBathroomInput {
@@ -680,8 +680,8 @@ input BookmarkWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  bathroom: BathroomWhereInput
   user: UserWhereInput
+  bathroom: BathroomWhereInput
   AND: [BookmarkWhereInput!]
   OR: [BookmarkWhereInput!]
   NOT: [BookmarkWhereInput!]
@@ -1034,7 +1034,7 @@ type User {
   password: String!
   bathrooms(where: BathroomWhereInput, orderBy: BathroomOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Bathroom!]
   reviews(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Review!]
-  bookmark(where: BookmarkWhereInput, orderBy: BookmarkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Bookmark!]
+  bookmarks(where: BookmarkWhereInput, orderBy: BookmarkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Bookmark!]
 }
 
 type UserConnection {
@@ -1050,7 +1050,7 @@ input UserCreateInput {
   password: String!
   bathrooms: BathroomCreateManyWithoutPostedByInput
   reviews: ReviewCreateManyWithoutCreatedByInput
-  bookmark: BookmarkCreateManyWithoutUserInput
+  bookmarks: BookmarkCreateManyWithoutUserInput
 }
 
 input UserCreateOneWithoutBathroomsInput {
@@ -1058,8 +1058,8 @@ input UserCreateOneWithoutBathroomsInput {
   connect: UserWhereUniqueInput
 }
 
-input UserCreateOneWithoutBookmarkInput {
-  create: UserCreateWithoutBookmarkInput
+input UserCreateOneWithoutBookmarksInput {
+  create: UserCreateWithoutBookmarksInput
   connect: UserWhereUniqueInput
 }
 
@@ -1074,10 +1074,10 @@ input UserCreateWithoutBathroomsInput {
   email: String!
   password: String!
   reviews: ReviewCreateManyWithoutCreatedByInput
-  bookmark: BookmarkCreateManyWithoutUserInput
+  bookmarks: BookmarkCreateManyWithoutUserInput
 }
 
-input UserCreateWithoutBookmarkInput {
+input UserCreateWithoutBookmarksInput {
   id: ID
   name: String!
   email: String!
@@ -1092,7 +1092,7 @@ input UserCreateWithoutReviewsInput {
   email: String!
   password: String!
   bathrooms: BathroomCreateManyWithoutPostedByInput
-  bookmark: BookmarkCreateManyWithoutUserInput
+  bookmarks: BookmarkCreateManyWithoutUserInput
 }
 
 type UserEdge {
@@ -1142,7 +1142,7 @@ input UserUpdateInput {
   password: String
   bathrooms: BathroomUpdateManyWithoutPostedByInput
   reviews: ReviewUpdateManyWithoutCreatedByInput
-  bookmark: BookmarkUpdateManyWithoutUserInput
+  bookmarks: BookmarkUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
@@ -1151,10 +1151,10 @@ input UserUpdateManyMutationInput {
   password: String
 }
 
-input UserUpdateOneRequiredWithoutBookmarkInput {
-  create: UserCreateWithoutBookmarkInput
-  update: UserUpdateWithoutBookmarkDataInput
-  upsert: UserUpsertWithoutBookmarkInput
+input UserUpdateOneRequiredWithoutBookmarksInput {
+  create: UserCreateWithoutBookmarksInput
+  update: UserUpdateWithoutBookmarksDataInput
+  upsert: UserUpsertWithoutBookmarksInput
   connect: UserWhereUniqueInput
 }
 
@@ -1179,10 +1179,10 @@ input UserUpdateWithoutBathroomsDataInput {
   email: String
   password: String
   reviews: ReviewUpdateManyWithoutCreatedByInput
-  bookmark: BookmarkUpdateManyWithoutUserInput
+  bookmarks: BookmarkUpdateManyWithoutUserInput
 }
 
-input UserUpdateWithoutBookmarkDataInput {
+input UserUpdateWithoutBookmarksDataInput {
   name: String
   email: String
   password: String
@@ -1195,7 +1195,7 @@ input UserUpdateWithoutReviewsDataInput {
   email: String
   password: String
   bathrooms: BathroomUpdateManyWithoutPostedByInput
-  bookmark: BookmarkUpdateManyWithoutUserInput
+  bookmarks: BookmarkUpdateManyWithoutUserInput
 }
 
 input UserUpsertWithoutBathroomsInput {
@@ -1203,9 +1203,9 @@ input UserUpsertWithoutBathroomsInput {
   create: UserCreateWithoutBathroomsInput!
 }
 
-input UserUpsertWithoutBookmarkInput {
-  update: UserUpdateWithoutBookmarkDataInput!
-  create: UserCreateWithoutBookmarkInput!
+input UserUpsertWithoutBookmarksInput {
+  update: UserUpdateWithoutBookmarksDataInput!
+  create: UserCreateWithoutBookmarksInput!
 }
 
 input UserUpsertWithoutReviewsInput {
@@ -1276,9 +1276,9 @@ input UserWhereInput {
   reviews_every: ReviewWhereInput
   reviews_some: ReviewWhereInput
   reviews_none: ReviewWhereInput
-  bookmark_every: BookmarkWhereInput
-  bookmark_some: BookmarkWhereInput
-  bookmark_none: BookmarkWhereInput
+  bookmarks_every: BookmarkWhereInput
+  bookmarks_some: BookmarkWhereInput
+  bookmarks_none: BookmarkWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
