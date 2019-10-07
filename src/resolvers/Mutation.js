@@ -29,6 +29,7 @@ async function login(parent, args, context, info) {
 }
 
 async function postBathroom(parent, args, context, info) {
+    const userId = getUserId(context);
     return context.prisma.createBathroom({
         businessName: args.businessName,
         description: args.description,
