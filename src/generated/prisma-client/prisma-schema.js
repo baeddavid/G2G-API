@@ -31,7 +31,6 @@ type Bathroom {
   address: String!
   category: String!
   genderNeutral: String!
-  directions: String!
   lat: Float!
   lng: Float!
   changingStations: Boolean!
@@ -56,7 +55,6 @@ input BathroomCreateInput {
   address: String!
   category: String!
   genderNeutral: String!
-  directions: String!
   lat: Float!
   lng: Float!
   changingStations: Boolean
@@ -90,7 +88,6 @@ input BathroomCreateWithoutBookmarksInput {
   address: String!
   category: String!
   genderNeutral: String!
-  directions: String!
   lat: Float!
   lng: Float!
   changingStations: Boolean
@@ -108,7 +105,6 @@ input BathroomCreateWithoutPostedByInput {
   address: String!
   category: String!
   genderNeutral: String!
-  directions: String!
   lat: Float!
   lng: Float!
   changingStations: Boolean
@@ -126,7 +122,6 @@ input BathroomCreateWithoutReviewsInput {
   address: String!
   category: String!
   genderNeutral: String!
-  directions: String!
   lat: Float!
   lng: Float!
   changingStations: Boolean
@@ -157,8 +152,6 @@ enum BathroomOrderByInput {
   category_DESC
   genderNeutral_ASC
   genderNeutral_DESC
-  directions_ASC
-  directions_DESC
   lat_ASC
   lat_DESC
   lng_ASC
@@ -181,7 +174,6 @@ type BathroomPreviousValues {
   address: String!
   category: String!
   genderNeutral: String!
-  directions: String!
   lat: Float!
   lng: Float!
   changingStations: Boolean!
@@ -283,20 +275,6 @@ input BathroomScalarWhereInput {
   genderNeutral_not_starts_with: String
   genderNeutral_ends_with: String
   genderNeutral_not_ends_with: String
-  directions: String
-  directions_not: String
-  directions_in: [String!]
-  directions_not_in: [String!]
-  directions_lt: String
-  directions_lte: String
-  directions_gt: String
-  directions_gte: String
-  directions_contains: String
-  directions_not_contains: String
-  directions_starts_with: String
-  directions_not_starts_with: String
-  directions_ends_with: String
-  directions_not_ends_with: String
   lat: Float
   lat_not: Float
   lat_in: [Float!]
@@ -350,7 +328,6 @@ input BathroomUpdateInput {
   address: String
   category: String
   genderNeutral: String
-  directions: String
   lat: Float
   lng: Float
   changingStations: Boolean
@@ -368,7 +345,6 @@ input BathroomUpdateManyDataInput {
   address: String
   category: String
   genderNeutral: String
-  directions: String
   lat: Float
   lng: Float
   changingStations: Boolean
@@ -383,7 +359,6 @@ input BathroomUpdateManyMutationInput {
   address: String
   category: String
   genderNeutral: String
-  directions: String
   lat: Float
   lng: Float
   changingStations: Boolean
@@ -431,7 +406,6 @@ input BathroomUpdateWithoutBookmarksDataInput {
   address: String
   category: String
   genderNeutral: String
-  directions: String
   lat: Float
   lng: Float
   changingStations: Boolean
@@ -448,7 +422,6 @@ input BathroomUpdateWithoutPostedByDataInput {
   address: String
   category: String
   genderNeutral: String
-  directions: String
   lat: Float
   lng: Float
   changingStations: Boolean
@@ -465,7 +438,6 @@ input BathroomUpdateWithoutReviewsDataInput {
   address: String
   category: String
   genderNeutral: String
-  directions: String
   lat: Float
   lng: Float
   changingStations: Boolean
@@ -590,20 +562,6 @@ input BathroomWhereInput {
   genderNeutral_not_starts_with: String
   genderNeutral_ends_with: String
   genderNeutral_not_ends_with: String
-  directions: String
-  directions_not: String
-  directions_in: [String!]
-  directions_not_in: [String!]
-  directions_lt: String
-  directions_lte: String
-  directions_gt: String
-  directions_gte: String
-  directions_contains: String
-  directions_not_contains: String
-  directions_starts_with: String
-  directions_not_starts_with: String
-  directions_ends_with: String
-  directions_not_ends_with: String
   lat: Float
   lat_not: Float
   lat_in: [Float!]
