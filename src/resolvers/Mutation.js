@@ -34,6 +34,7 @@ async function postBathroom(parent, args, context, info) {
         businessName: args.businessName,
         description: args.description,
         address: args.address,
+        category: args.category,
         lat: args.lat,
         lng: args.lng,
         purchaseRequired: args.purchaseRequired,
