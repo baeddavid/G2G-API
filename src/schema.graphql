@@ -24,7 +24,6 @@ type Mutation {
         address: String!,
         genderNeutral: String!,
         category: String!,
-        directions: String!,
         lat: Float!,
         lng: Float!,
         changingStations: Boolean!,
@@ -46,7 +45,6 @@ type Mutation {
         address: String!,
         genderNeutral: String!,
         category: String!,
-        directions: String!,
         lat: Float!,
         lng: Float!,
         changingStations: Boolean!,
@@ -77,7 +75,6 @@ type Bathroom {
     address: String!
     genderNeutral: String!
     category: String!
-    directions: String!
     lat: Float!
     lng: Float!
     changingStations: Boolean!
