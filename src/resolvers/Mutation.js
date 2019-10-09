@@ -37,6 +37,7 @@ async function postBathroom(parent, args, context, info) {
         category: args.category,
         lat: args.lat,
         lng: args.lng,
+        changingStations: args.changingStations,
         purchaseRequired: args.purchaseRequired,
         genderNeutral: args.genderNeutral,
         accessibleStall: args.accessibleStall,
@@ -60,6 +61,8 @@ async function updateBathroom(parent, args, context, info) {
         where: { id: `${args.id}`},
         data: {
             businessName: args.businessName,
+            category: args.category,
+            changingStations: args.changingStations,
             description: args.description,
             address: args.address,
             lat: args.lat,
