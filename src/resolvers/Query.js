@@ -24,18 +24,18 @@ async function feed(parent, args, context, info) {
         count,
     };
 }
-
+// TODO PUSH TO HEROKU
 async function getClosest(parent, args, context, info) {
     const where = {
         AND: [{
             AND: [
-                { lat_lt: args.currentLat + 1 },
-                { lng_lt: args.currentLng + 1},
+                { lat_lt: args.currentLat + .25 },
+                { lng_lt: args.currentLng + .25},
             ]
         }, {
             AND: [
-                { lat_gt: args.currentLat - 1 },
-                { lng_gt: args.currentLng - 1},
+                { lat_gt: args.currentLat - .25 },
+                { lng_gt: args.currentLng - .25},
             ]
         }]
     };
