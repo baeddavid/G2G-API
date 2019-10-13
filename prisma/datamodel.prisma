@@ -14,7 +14,7 @@
     singleOccupancy: Boolean! @default(value: false)
     postedBy: User @relation(name: "Creator")
     reviews: [Review!]!
-    bookmarks: [Bookmark!]!
+    bookmarks: [Bookmark!]! @relation(name: "Saver" onDelete: CASCADE)
 }
 
 type Review {
@@ -28,7 +28,7 @@ type Review {
 type Bookmark  {
     id: ID! @id
     user: User!
-    bathroom: Bathroom!
+    bathroom: Bathroom! @relation(name: "Saver" onDelete: SET_NULL)
 }
 
 type User {

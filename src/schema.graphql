@@ -18,6 +18,8 @@ type Mutation {
 
     bookmark(bathroomId: ID!): Bookmark
 
+    removeBookmark(id: ID!): Bookmark
+
     postBathroom(
         businessName: String,
         description: String!,
